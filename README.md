@@ -1,5 +1,3 @@
-
-
 # Unwinnable By Design
 
 This is a very early concept prototype of a text adventure game, written in the style of Steve Meretzky and Douglas Adams.
