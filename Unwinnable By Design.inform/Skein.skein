@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Skein rootNode="node-1">
+  <generator>Windows Inform 10.1.2</generator>
+  <item nodeId="node-1">
+    <command xml:space="preserve">Unwinnable By Design</command>
+    <result xml:space="preserve">You wake up, having no idea where you are or how you got here. &#x000A;&#x000A;Mostly, this occurred because the author was too uncreative to write out a proper backstory for you.  A medical diagnosis of amnesia occurs only in perhaps four out of 100,000 patients, and people with actual amnesia practically never forget who they are, but it is convenient to stick with the popular fiction here, because figuring out a backstory for the player character would take a lot of thinking, and thinking is hard, and writing interactive fiction is even harder than thinking.&#x000A;&#x000A;Unwinnable By Design&#x000A;An Interactive (insert game genre name here) Fiction by John Byrd&#x000A;Release 1 / Serial number 240811 / Inform 7 v10.1.2 / D&#x000A;&#x000A;Starting Room&#x000A;This is the room that the game starts you in. Note to self: come back and write a detailed description of this room. It needs to have lots of interesting things to look at, to create the tone and setting for the game. Gamers care a lot about such things, like tone and setting, so make sure to make it good.&#x000A;&#x000A;You can see an NPC and an object here.&#x000A;&#x000A;&gt;</result>
+    <commentary xml:space="preserve"></commentary>
+    <changed>NO</changed>
+  </item>
+</Skein>
