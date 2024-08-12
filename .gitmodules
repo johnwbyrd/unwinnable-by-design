@@ -1,0 +1,3 @@
+[submodule "inform-extensions"]
+	path = inform-extensions
+	url = git@github.com:johnwbyrd/inform-extensions.git
