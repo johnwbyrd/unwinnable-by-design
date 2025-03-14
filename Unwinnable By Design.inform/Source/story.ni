@@ -41,8 +41,8 @@ Book 1 - Response Tables
 
 Table of Starting Room Responses
 verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
-"take"	"NPC"	""	-20	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
-"take"	"NPC"	""	-40	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
+"taking"	"the NPC"	""	-20	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
+"taking"	"the NPC"	""	-40	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
 "examine"	"sword"	""	-5	false	true	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
 "eat"	"sword"	""	-25	false	false	false	"You want to EAT the SWORD? Do you have any idea how swords work? They're not food!"
 "eat"	"sword"	""	-50	false	true	false	"This isn't SIM SWORD EATER 3000! I acknowledge your oral fixation on swords, and maybe you should have that professionally diagnosed, but at the moment we're just trying to get through this adventure! Can we get some positive teamwork here?"
@@ -51,7 +51,7 @@ verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	res
 
 Book 2 - Response Processing System
 
-To decide whether processing responses from (T - a table-name):
+To decide whether the current action is handled in (T - a table-name):
 	let current-verb be "[the action name part of the current action]";
 	let current-noun be "";
 	if the noun is not nothing:
@@ -59,9 +59,13 @@ To decide whether processing responses from (T - a table-name):
 	let current-second be "";
 	if the second noun is not nothing:
 		now current-second is "[the second noun]";
+	say "Current verb: '[current-verb]'  Current noun: '[current-noun]'  Currend second: '[current-second]'";
 	repeat through T:
+		say "Trying [current-verb] with [verb entry]: ";
 		if the verb entry is current-verb:
+			say "Matched [verb entry]! First noun: '[first-noun entry]' Second noun: '[second-noun entry]'";
 			if the first-noun entry is current-noun and the second-noun entry is current-second:
+				say "Got it!!";
 				if said-already entry is false or is-final entry is true:
 					say response entry;
 					decrease score by points entry;
@@ -70,13 +74,15 @@ To decide whether processing responses from (T - a table-name):
 					if triggers-compliance entry is true:
 						decide yes;
 					decide no;
+			otherwise:
+				say "aw shucks. ";
 	decide no.
 
 Before doing anything:
-	if processing responses from the current response table:
-		continue the activity;
+	if the current action is handled in the current response table:
+		stop the action;
 	otherwise:
-		stop the action.
+		continue the action.
 
 Volume 3 - Game Content
 
@@ -84,11 +90,13 @@ Book 1 - Starting Village
 
 Part 1 - Room and Objects
 
-The Village is a room. The description of the Village is "You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward in a compelling manner."
+The Village is a room. The description of the Village is "You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
 
-The NPC is a person in the Village. The description of the NPC is "The NPC looks exactly like you'd expect an NPC to look in one of these games. Utterly forgettable."
+The NPC is a transparent person in the Village. "A non-player character, who is here to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
 
-The sword is a thing. The player carries the sword. The description of the sword is "It's a sword. Like in every other game. Maybe it's magical. Who knows?"
+The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
+
+The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
 
 Part 2 - Custom Actions
 
