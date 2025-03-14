@@ -6,8 +6,8 @@ Book 1 - Basic Setup
 
 Part 1 - Basic Definitions
 
-The story headline is "An Adventure in Frustration".
-The story description is "A masterpiece 49 years in the making".
+The story headline is "An Adventuring Magnum Opus".
+The story description is "The most challenging interactive fictional story ever created for the microcomputer".
 The story creation year is 1982.
 Release along with the introductory booklet and source text.
 
@@ -92,9 +92,9 @@ Book 1 - Starting Village
 
 Part 1 - Room and Objects
 
-The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got there. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
+The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got here. All text adventure games are legally required to begin this way. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
 
-The NPC is a person in the Village. "A non-player character, who is here to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
+The NPC is a person in the Village. "A non-player character is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
@@ -115,9 +115,11 @@ Before printing the banner text:
 	say "Welcome, adventurer. You are about to embark on a journey, just as exciting as The Beastmaster or Conan The Destroyer, but one that you experience on your personal microcomputer. In this incredible new medium, we use your personal microcomputer as a window into a dynamic new form of storytelling. Unlike a traditional book, where you turn pages and may get paper cuts, your choices drive the story forward, by typing on your microcomputer, and seeing the results pop up as words on your color TV. We like to call this incredible new medium, 'interactive fiction,' in that it is both fictional, which means made up, and it is interactive, which means active in an inter way.[paragraph break]";
 	say "Interactive fiction is like the books and stories that you have read before, but now with the ability to dynamically choose story choices based on choosing your own choices. This is a truly new form of entertainment, which literally no human being could possibly imagine, until this very moment.[paragraph break]";
 	say "The stage is set. Characters, story, gameplay, and plot, have all been carefully designed and redesigned over the past 49 years, all with one goal: to give you the ultimate adventuring interactive fiction computer gaming game experience. This game contains thousands of extremely lifelike characters, tens of thousands of ordinary and magical objects and weapons, and over six hundred thousand million exciting locations. Every moment of this game has been carefully engineered and crafted, with the best writing and programming known to art and science, in order to keep you maximally entertained.[paragraph break]";
-	say "Due to its sheer entertainment value, you are bound to lose yourself inside this extremely realistic adventuring world. Make sure to take appropriate breaks, for bathroom and sleep. Do not operate heavy machinery while playing this game.[paragraph break]";
-	say "Now, sit back, and prepare to engage with this fantastic magnum opus, this masterpiece of genius 'computer game' entertainment... From the future.[paragraph break]";
-	say "Unwinnable By Design[line break]by Grim (GRIMOIRE) 1.217[line break]Copyright 1982, Gigantic Software, Inc. All Rights Reserved.[paragraph break]";
+	say "Due to its sheer entertainment value, you are bound to lose yourself inside this extremely realistic and exceptionally challenging adventuring world. This game is hard, exceptionally hard, and it will make you feel as though you are really adventuring your adventures personally yourself. This is by far the most difficult game ever created. Make sure to take appropriate breaks, for bathroom and sleep. Do not operate heavy machinery while playing this game.[paragraph break]";
+	say "Now, sit back, and prepare to be thrilled and fascinated, with this fantastic magnum opus, this masterpiece of genius 'computer game' entertainment... from the future.[paragraph break]";
+	
+Rule for printing the banner text:
+	say "[bold type]Unwinnable By Design[roman type][line break]by GRIMOIRE (General Response Interface for Managing Operations In Recursive Environments) v 1.217a[line break]Copyright 1982, Gigantic Software, Inc. All Rights Reserved.[paragraph break]" instead.
 
 Book 2 - The Maze
 
@@ -219,7 +221,6 @@ Rule for printing a parser error when the latest parser error is the I beg your 
 
 Rule for printing a parser error:
 	say "[one of]Your inability to form coherent commands is starting to physically pain me.[or]Do you just mash random keys and hope something happens?[or]I'm starting to think you're doing this on purpose.[at random]"
-
 
 Book 3 - Testing and Debugging
 
