@@ -41,13 +41,15 @@ Book 1 - Response Tables
 
 Table of Starting Room Responses
 verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
-"taking"	"the NPC"	""	-20	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
-"taking"	"the NPC"	""	-40	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
-"examine"	"sword"	""	-5	false	true	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
-"eat"	"sword"	""	-25	false	false	false	"You want to EAT the SWORD? Do you have any idea how swords work? They're not food!"
-"eat"	"sword"	""	-50	false	true	false	"This isn't SIM SWORD EATER 3000! I acknowledge your oral fixation on swords, and maybe you should have that professionally diagnosed, but at the moment we're just trying to get through this adventure! Can we get some positive teamwork here?"
-"take"	""	""	-10	false	false	false	"Taking things? How predictably adventurer-like..."
-"eat"	""	""	-15	false	false	false	"Eating things won't solve your problems..."
+"taking"	"the NPC"	""	0	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
+"taking"	"the NPC"	""	1	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
+"examining"	"the sword"	""	0	false	false	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
+"eating"	"the sword"	""	0	false	false	false	"You want to EAT the SWORD? Do you have any idea how swords work? They're not food!"
+"eating"	"the sword"	""	0	false	false	false	"This isn't SIM SWORD EATER 3000! I acknowledge your oral fixation on swords, and maybe you should have that professionally diagnosed, but at the moment we're just trying to get through this adventure! Can we get some positive teamwork here?"
+"eating"	"the sword"	""	2	false	false	true	"Fine, you eat the sword.  Happy now?"
+"eating"	"the sword"	""	0	false	true	false	"No.  You've already eaten it."
+"taking"	""	""	0	false	false	false	"Taking things? How predictably adventurer-like..."
+"eating"	""	""	0	false	false	false	"Eating things won't solve your problems..."
 
 Book 2 - Response Processing System
 
@@ -90,7 +92,7 @@ Book 1 - Starting Village
 
 Part 1 - Room and Objects
 
-The Village is a room. The description of the Village is "You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
+The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got there. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
 
 The NPC is a person in the Village. "A non-player character, who is here to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
 
@@ -108,7 +110,6 @@ Before asking the NPC about "quest" during the Starting Room:
 When Starting Room begins:
 	now the current response table is the Table of Starting Room Responses;
 	now the current-scene-threshold is -100;
-	say "You wake up, having no idea of who you are, or how you got there. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome."
 
 Before printing the banner text:
 	say "Welcome, adventurer. You are about to embark on a journey, just as exciting as The Beastmaster or Conan The Destroyer, but one that you experience on your personal microcomputer. In this incredible new medium, we use your personal microcomputer as a window into a dynamic new form of storytelling. Unlike a traditional book, where you turn pages and may get paper cuts, your choices drive the story forward, by typing on your microcomputer, and seeing the results pop up as words on your color TV. We like to call this incredible new medium, 'interactive fiction,' in that it is both fictional, which means made up, and it is interactive, which means active in an inter way.[paragraph break]";
@@ -208,20 +209,17 @@ Carry out hinting:
 Book 2 - Standard Library Overrides
 
 Rule for printing a parser error when the latest parser error is the can't see any such thing error:
-	say "I don't see that here. Did you even LOOK at the room description? -5 points for hallucinating objects.";
-	decrease the score by 5.
+	say "I don't see that here. Did you even LOOK at the room description?";
 
 Rule for printing a parser error when the latest parser error is the not a verb I recognise error:
-	say "I have an advanced degree in parsing natural language, and even I can't understand whatever it is you just typed. -10 points for linguistic incompetence.";
-	decrease the score by 10.
+	say "I have an advanced degree in parsing natural language, and even I can't understand whatever it is you just typed. ";
 
 Rule for printing a parser error when the latest parser error is the I beg your pardon error:
-	say "Oh, so NOW you're being polite? After everything you've done? -5 points for false courtesy.";
-	decrease the score by 5.
+	say "Oh, so NOW you're being polite? After everything you've done?";
 
 Rule for printing a parser error:
-	say "[one of]Your inability to form coherent commands is starting to physically pain me.[or]Do you just mash random keys and hope something happens?[or]I'm starting to think you're doing this on purpose.[at random] -10 points.";
-	decrease the score by 10.
+	say "[one of]Your inability to form coherent commands is starting to physically pain me.[or]Do you just mash random keys and hope something happens?[or]I'm starting to think you're doing this on purpose.[at random]"
+
 
 Book 3 - Testing and Debugging
 
