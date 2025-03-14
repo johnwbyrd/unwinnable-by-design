@@ -59,13 +59,13 @@ To decide whether the current action is handled in (T - a table-name):
 	let current-second be "";
 	if the second noun is not nothing:
 		now current-second is "[the second noun]";
-	say "Current verb: '[current-verb]'  Current noun: '[current-noun]'  Currend second: '[current-second]'";
+	[say "Current verb: '[current-verb]'  Current noun: '[current-noun]'  Currend second: '[current-second]'";]
 	repeat through T:
-		say "Trying [current-verb] with [verb entry]: ";
+		[say "Trying [current-verb] with [verb entry]: ";]
 		if the verb entry is current-verb:
-			say "Matched [verb entry]! First noun: '[first-noun entry]' Second noun: '[second-noun entry]'";
+			[say "Matched [verb entry]! First noun: '[first-noun entry]' Second noun: '[second-noun entry]'";]
 			if the first-noun entry is current-noun and the second-noun entry is current-second:
-				say "Got it!!";
+				[say "Got it!!";]
 				if said-already entry is false or is-final entry is true:
 					say response entry;
 					decrease score by points entry;
@@ -74,8 +74,8 @@ To decide whether the current action is handled in (T - a table-name):
 					if triggers-compliance entry is true:
 						decide yes;
 					decide no;
-			otherwise:
-				say "aw shucks. ";
+			[otherwise:
+				say "aw shucks. ";]
 	decide no.
 
 Before doing anything:
@@ -92,7 +92,7 @@ Part 1 - Room and Objects
 
 The Village is a room. The description of the Village is "You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
 
-The NPC is a transparent person in the Village. "A non-player character, who is here to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
+The NPC is a person in the Village. "A non-player character, who is here to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
