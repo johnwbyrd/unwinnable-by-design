@@ -1,3 +1,6 @@
 Build/
 Release/
 Index/
+*.plist
+*.iFiction
+*.blurb
