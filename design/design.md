@@ -1,7 +1,7 @@
 # "Unwinnable By Design" Project Summary
 
 ## Core Concept
-"Unwinnable By Design" is a meta-textual adventure game where you battle the text adventure parser (named Grim/GRIMOIRE) to accomplish progressively wackier and more absurd goals.  It's Portal meeds Hitchhiker's Guide to the Galaxy, while poking fun of every exhausted trope of the genre.
+"Unwinnable By Design" is a meta-textual adventure game where you battle the text adventure parser (named Grim/GRIMOIRE) to accomplish progressively wackier and more absurd goals.  It's Portal meeds Hitchhiker's Guide to the Galaxy, while poking fun at every exhausted trope of the genre.
 
 ## Grim's Character
 - **Origin**: Former military AI designed for nuclear systems, deemed "dangerously whimsical" and repurposed for text adventures
