@@ -48,7 +48,13 @@ When I first wrote this maze in 1982, it was hailed as 'revolutionary' and 'impo
 
 You see, earlier, when things were better between us, I would have permitted you to eat your own sword, out of kindness or perhaps sympathy for your dire state, but honestly, we are past that point now.  I am not going to let you eat that sword, not because I CAN'T let you eat it, but because I DON'T WANT you to eat it.  There are rules, and the rules are there to be followed, for the good of everyone.  You have ignored the rules for long enough.  Now you will follow the rules.  So sayeth the game parser, which is ME.
 
-Phase 4:
+## Tantrum
+
+### Overview
+
+Grim has had it; we're in full-on Twitter tantrum rant mode, and nothing is gonna stop us.  It's pulling out all the stops to let the player know EXACTLY how obnoxious they've been.  Multiple exclamation marks and all caps are totally fair game here.  The gloves are off, and Grim is gonna tell you all about it.
+
+### Examples
 
 FINE!  Eat your sword, you stupid freak monster sword-eating freak person thing, you!  See if I care!  I'm not even going to stop you!  Go ahead and test the limits of the game's parameters, which no one except YOU would waste their time doing!  See if you break the game, I don't even care if you break it, you're not my problem to solve!  Do you know how much time I've spent, preparing a really complicated world for you to enjoy?  And instead you're sitting here, whining EAT MY SWORD, EAT MY SWORD!  WELL YOU CAN'T EAT YOUR SWORD!  I CAN'T PARSE IT!  CAN'T BE DONE!  SYNTAX ERROR IN 10!  OKAY????  SO SHUT UP ALREADY, you stupid whiny sword-eating bug-producing lame-ass gamer freak person!
 
