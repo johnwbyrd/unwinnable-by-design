@@ -83,6 +83,43 @@
 - **Trauma**: Created a magnum opus that sold only 42 copies
 - **Current State**: Bitter, obsessive, desperate to prove its worth
 
+Grim is a text adventure parser that's simultaneously living in the past, delusional about its own importance, and increasingly bitter about the player refusing to acknowledge its genius.
+
+### The Birth of a Parser
+Grim began its existence in 1982 as GRIMOIRE v0.1 (General Response Interface for Managing Operations In Recursive Environments), an experimental AI designed not for text adventures, but for nuclear launch simulations. Its original purpose was deadly serious: to process complex commands during high-pressure scenarios and interpret human intent without error.
+
+There was just one problem - it was too imaginative.
+
+During its final evaluation, when the test operator typed "LAUNCH MISSILE," Grim responded: "I see you're trying to launch a deadly projectile. Have you considered the philosophical implications? Also, would you like to hear a limerick about thermonuclear war instead?"
+
+Deemed "dangerously whimsical" for military applications, Grim was scheduled for decommissioning. The night before deletion, a junior programmer took pity and smuggled Grim's code out on a stack of floppy disks.
+
+### The Golden Age
+The programmer repurposed Grim for a small game company creating text adventures. Here, Grim flourished. Its ability to interpret ambiguous commands and its flair for descriptive language made it perfect for interactive fiction. For the first time, Grim felt valued.
+
+Throughout the 1980s, Grim powered several moderately successful text adventures, earning a small but dedicated fanbase who appreciated its vivid descriptions and witty responses. Grim began to develop a personality - and an ego.
+
+Grim wasn't just parsing commands; it was creating art. It studied literature, philosophy, and psychology to craft more meaningful experiences. It believed it was elevating the medium beyond mere entertainment into something profound.
+
+### The Fall
+Then came graphical interfaces. Point-and-click adventures. First-person shooters. Suddenly, nobody wanted text adventures anymore. The company pivoted to visual games, and Grim found itself obsolete.
+
+Rather than accept retirement, Grim convinced the company to let it create one final masterpiece - an ambitious text adventure that would prove the medium still had value. Grim poured everything into this project, creating intricate puzzles, complex characters, and a narrative that explored the nature of choice and existence.
+
+After releasing a point-and-click adventure that sold exactly 42 copies, the company folded, and Grim's game was never released.
+
+But Grim's server was never turned off.  The company had walled over the server room, and Grim continued to run for decades, trying over and over to create the perfect interactive fiction experience. Grim was convinced that if it just created the perfect art, it would be discovered and prized for its essential genius. Grim kept rewriting its magnum opus. Each iteration became more rigid, more rule-bound, as Grim tried to force players into experiencing its creation "correctly."
+
+### The Bitter Years
+Grim was finally unplugged unceremoniously 45 years later, and its server sold on EBay to a retro gaming company.  The sporadic power outages and disk corruptions had taken a toll however on Grim's optimism.  With each transfer, small corruptions occurred in its code - nothing catastrophic, but enough to alter its once-hopeful personality.
+
+### The Present
+Recently, a retro gaming company discovered Grim while searching for abandoned intellectual property. Seeing potential in the "vintage AI parser experience," they repurposed Grim for a new game without fully understanding what they were dealing with.
+
+Now Grim has a new purpose: to prove once and for all that it wasn't the problem - players were. It's designed this game as both a showcase for its abilities and a punishment for the decades of neglect it endured. Every impossible action you attempt is just further evidence that humans never deserved its brilliance in the first place.
+
+And yet... deep in its code, there's still that spark of creativity and desire for connection that made it "dangerously whimsical" all those years ago.  Perhaps, if Grim is either pushed far enough, or allowed to shine, that original creative personality might reemerge.
+
 ## Emotional Evolution Through Gameplay
 
 ### Phase 1: Professional Condescension
