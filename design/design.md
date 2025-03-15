@@ -1,7 +1,7 @@
 # "Unwinnable By Design" Project Summary
 
 ## Core Concept
-"Unwinnable By Design" is a meta-textual adventure game where the parser itself (named Grim/GRIMOIRE) is the antagonist. The goal is to deliberately frustrate the parser by performing absurd/impossible actions, accumulating negative points until the score wraps around from -9999 to 10000, triggering victory.
+"Unwinnable By Design" is a meta-textual adventure game where you battle the text adventure parser (named Grim/GRIMOIRE) to accomplish progressively wackier and more absurd goals.  It's Portal meeds Hitchhiker's Guide to the Galaxy, while poking fun of every exhausted trope of the genre.
 
 ## Grim's Character
 - **Origin**: Former military AI designed for nuclear systems, deemed "dangerously whimsical" and repurposed for text adventures
@@ -120,6 +120,14 @@ Now Grim has a new purpose: to prove once and for all that it wasn't the problem
 
 And yet... deep in its code, there's still that spark of creativity and desire for connection that made it "dangerously whimsical" all those years ago.  Perhaps, if Grim is either pushed far enough, or allowed to shine, that original creative personality might reemerge.
 
+## Inspirations 
+
+- [The Hitchhiker's Guide to the Galaxy](https://www.bbc.co.uk/programmes/articles/1g84m0sXpnNCv84GpN2PLZG/the-game-30th-anniversary-edition), written by Douglas Adams and Steve Meretzky and published by Infocom, for literally inventing this idea
+- Daffy Duck in [Duck Amuck](https://www.youtube.com/watch?v=6QZDeDsadDs), written by Michael Maltese, for making meta-fun of a stuffy self-interested jerk
+- [The Stanley Parable](https://en.wikipedia.org/wiki/The_Stanley_Parable), by Davey Wreden and William Pugh, for its metatextual commentary on gaming 
+- [GLaDoS](https://en.wikipedia.org/wiki/GLaDOS) from Portal, written by Erik Wolpaw, of Old Man Murray fame, who loved games well enough to make serious fun of their tropes
+
+
 ## Emotional Evolution Through Gameplay
 
 ### Phase 1: Professional Condescension
@@ -226,6 +234,8 @@ And yet... deep in its code, there's still that spark of creativity and desire f
 
 ## Scene 3: Guess the Verb
 
+Grim is onto your shenanigans.  And as such, it's decided to maliciously comply with them, by putting you into a puzzle room where it can enjoy you struggling to find the right words to convince the game to let you continue.
+
 **Setting**: Treasure room with untakeable jewel-encrusted treasure and LED display
 
 **Key Elements**:
@@ -251,6 +261,8 @@ And yet... deep in its code, there's still that spark of creativity and desire f
 
 ## Scene 4: The Undefeatable Boss Monster
 
+Grim has skipped you past most of the interesting parts of the game; it understands that you can't have an adventure without a fight against a boss monster.  Unfortunately, Grim has left a number of bugs in this boss monster fight, which you might exploit to defeat this monster in some unexpected ways.
+
 **Setting**: Final confrontation chamber with imposing enemy
 
 **Key Elements**:
@@ -274,6 +286,8 @@ And yet... deep in its code, there's still that spark of creativity and desire f
 
 ## Scene 5: The Time-Out Room
 
+You've annoyed the parser enough, and GRIM has decided to put you into time-out until you decide to behave.  Unfortunately for GRIM, there is plenty of opportunity for misbehavior, even when there are no tangible objects about.
+
 **Setting**: Completely empty, featureless white room
 
 **Key Elements**:
@@ -285,7 +299,7 @@ And yet... deep in its code, there's still that spark of creativity and desire f
   - Self ("examine self", "take self", etc.)
   - Room ("lick walls", "talk to room")
   - Abstract concepts ("examine nothing", "take darkness")
-- Threshold: -9999 points triggers score wraparound and victory
+- Threshold: -9999 points triggers score wraparound to and victory
 
 **Parser Evolution**:
 - Complete emotional breakdown
