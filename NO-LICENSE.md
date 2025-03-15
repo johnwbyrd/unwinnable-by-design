@@ -7,7 +7,7 @@ This Proprietary Software Notice (the "Notice") pertains to the software product
 
 ## NO LICENSE GRANTED
 
-Gigantic Software, LLC ("Owner") retains all rights, title, and interest in and to the Software, including all intellectual property rights. You are not granted any right, license, or interest to use, access, or possess the Software in any form whatsoever, including but not limited to source code, object code, or executable form.
+Gigantic Software, LLC ("Owner") retains all rights, title, and interest in and to the Software, including all intellectual property rights. You are not granted any right, license, or interest to use, access, or possess the Software in any form whatsoever, including but not limited to source code, object code, or executable form. This restriction may only be waived with the express written permission of Gigantic Software.
 
 ## COPYRIGHT AND INTELLECTUAL PROPERTY
 
