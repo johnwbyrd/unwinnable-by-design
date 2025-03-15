@@ -126,7 +126,7 @@ And yet... deep in its code, there's still that spark of creativity and desire f
 - Daffy Duck in [Duck Amuck](https://www.youtube.com/watch?v=6QZDeDsadDs), written by Michael Maltese, for making meta-fun of a stuffy self-interested jerk
 - [The Stanley Parable](https://en.wikipedia.org/wiki/The_Stanley_Parable), by Davey Wreden and William Pugh, for its metatextual commentary on gaming 
 - [GLaDoS](https://en.wikipedia.org/wiki/GLaDOS) from Portal, written by Erik Wolpaw, of Old Man Murray fame, who loved games well enough to make serious fun of their tropes
-
+- [Monkey Island series](https://en.wikipedia.org/wiki/Monkey_Island_2:_LeChuck%27s_Revenge), written by Ron Gilbert and Tim Schafer et al, for knowing full well how maddening the point-and-click genre was 
 
 ## Emotional Evolution Through Gameplay
 
