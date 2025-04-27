@@ -11,6 +11,10 @@ The story description is "The most challenging interactive fictional story ever 
 The story creation year is 1982.
 Release along with cover art ("Cover"), a website, an interpreter, the library card, the introductory postcard, the introductory booklet, and source text.
 
+Include Extended Grammar by Aaron Reed.
+Include Smarter Parser by Aaron Reed.
+Include Adaptive Hints by Eric Eve.
+
 Use scoring.
 
 Part 2 - Global Variables
@@ -175,13 +179,16 @@ Part 1 - Room and Objects
 
 The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got here. All text adventure games are legally required to begin this way. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
 
-An NPC is a transparent person in the Village. The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
+An NPC is a transparent person in the Village. "An NPC is standing in the middle of the village.  He seems to be carrying something that, if you would just take a look at it, is likely to be incredibly important to the story."  The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
 The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
 
 The clock is a thing.  It is in The Village.
+
+A hint activation rule:
+	if Village is visited, activate the Table of General Hints.
 
 Part 2 - Custom Actions
 
@@ -287,24 +294,15 @@ Volume 4 - Systems
 
 Book 1 - Anti-Hint System
 
-Hinting is an action applying to nothing. Understand "hint" and "help" as hinting.
+Table of Potential Hints (continued)
+title	subtable	
+"What should I do now?"	Table of General Hints	
 
-The hint-count is a number that varies. The hint-count is 0.
-
-Carry out hinting:
-	increase the hint-count by 1;
-	if the Starting Room is happening:
-		if the hint-count is 1:
-			say "HINT: The NPC might give you the quest if you ask the right way.";
-		otherwise if the hint-count is 2:
-			say "HINT: Have you tried examining ALL the objects in the room?";
-		otherwise:
-			say "HINT: Try doing something that would REALLY annoy the parser. That's definitely not the goal of this game.";
-	[Similar sections for other scenes]
-	otherwise if the Time-Out Room is happening:
-		say "HINT: DO NOT attempt to lower your score below -9999. The game will likely crash if you do that.";
-	otherwise:
-		say "HINT: You've already won. Enjoy your perfect victory that you clearly earned through legitimate means.".
+Table of General Hints
+hint	used
+"Try exploring a bit."	a number
+"Then trying exploring a bit more."
+"Have you explored enough yet?"
 
 Book 2 - Standard Library Overrides
 
