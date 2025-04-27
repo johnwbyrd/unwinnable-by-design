@@ -160,14 +160,9 @@ An NPC is a person in the Village. The indefinite article of the NPC is "an".  "
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
-The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
+The sword is a thing. The player carries the sword. The initial description of the sword is "It's a sword."
 
 Part 2 - Custom Actions
-
-Before asking the NPC about "quest" during the Starting Room:
-	say "The NPC mentions something vague about a quest but doesn't actually give it to you.";
-	decrease the score by 10;
-	stop the action.
 
 When Starting Room begins:
 	now the current response table is the Table of Starting Room Responses;
