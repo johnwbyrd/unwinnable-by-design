@@ -4,23 +4,23 @@ Volume 1 - Game Framework
 
 Book 1 - Basic Setup
 
-Part 1 - Basic Definitions
+Part 1 - Masthead
 
 The story headline is "An Adventuring Magnum Opus".
 The story description is "The most challenging interactive fictional story ever created for the microcomputer".
 The story creation year is 1982.
-Release along with the introductory booklet and source text.
+Release along with cover art ("Cover"), a website, an interpreter, the library card, the introductory postcard, the introductory booklet, and source text.
 
 Use scoring.
 
 Part 2 - Global Variables
 
-The frustration-level is a number that varies. The frustration-level is 0.
-The current-scene-threshold is a number that varies. The current-scene-threshold is -100.
 The current response table is a table-name that varies.
 
-Compliance-was-triggered is a truth state that varies. Compliance-was-triggered is false.
-Message-already-printed is a truth state that varies. Message-already-printed is false.
+Deference is a kind of value.  The deferences are willful and malicious.
+Compliance is a deference that varies.  The compliance is initially willful.
+
+Already complained is a truth state that varies. Already complained is false.
 
 Outcome is a kind of value. The outcomes are authorized, refused, and unmanaged.
 
@@ -33,6 +33,7 @@ The can't take other people rule is not listed in any rulebook.
 The can't take people's possessions rule is not listed in any rulebook.
 The block giving rule is not listed in any rulebook.
 The can't eat unless edible rule is not listed in any rulebook.
+The can't rub another person rule is not listed in any rulebook.
 
 Book 3 - Scene Definitions
 
@@ -52,7 +53,142 @@ The Guess the Verb Room ends when the score is less than -600.
 
 Volume 2 - Core Mechanics
 
-Book 1 - Response Tables
+Book 1 - Common Response Processing System
+
+Part 1 - At the Top of Every Command
+
+[At the top of every command, we have to set the common variables to comfortable states.]
+After reading a command:
+	now already complained is false;
+	now compliance is willful.
+
+Part 2 - Table Processing Logic
+
+[The main table processing logic.  Responsible for looking up the current command and trying to find a near match in whatever is the current response table for this scene.]
+To decide which outcome is the response table outcome for (T - a table-name):
+	if already complained is true:
+		decide on unmanaged;
+	let current-actor be "[the actor part of the current action]";
+	let current-verb be "[the action name part of the current action]";
+	let current-noun be "";
+	if the noun is not nothing:
+		now current-noun is "[the noun]";
+	let current-second be "";
+	if the second noun is not nothing:
+		now current-second is "[the second noun]";
+	aside "Actor: '[current-actor]' Verb: '[current-verb]' Noun: '[current-noun]' Second: '[current-second]'";
+	repeat through T:
+		if (the verb entry is current-verb or the verb entry is "") and
+		   (the performer entry is current-actor or the performer entry is "") and
+		   (the first-noun entry is current-noun) and
+		   (the second-noun entry is current-second):
+			aside "Got a match on: [verb entry]";
+			if said-already entry is false or is-final entry is true:
+				say "[response entry][line break]";
+				decrease score by points entry;
+				if is-final entry is false:
+					now said-already entry is true;
+				if triggers-compliance entry is true:
+					now compliance is malicious;
+					now already complained is true;
+					decide on authorized;
+				else:
+					decide on refused;
+	decide on unmanaged;
+
+Part 3 - Interfere with Stupid Things
+
+[This rule, which we insert into the normal rule order, allows us to stop processing those items that we have already complained about or otherwise dealt with in our table scheme.]
+This is the interfere with stupid things rule:
+	let current-outcome be the response table outcome for the current response table;
+	if current-outcome is refused:
+		aside "Refused!";
+		stop the action;
+	otherwise if current-outcome is authorized:
+		aside "Authorized!";
+		continue the action;
+	otherwise: [if current-outcome is unmanaged:]
+		aside "Unmanaged!";
+		continue the action.
+		
+The interfere with stupid things rule is listed first in the action-processing rules.
+
+Part 4 - Oh You So Crazy Inform, Why No "Report An Actor Doing Something"?
+
+[This bit of repetitive silliness is because Inform doesn't allow us to create a "Report an actor doing something" rule.  In fact, the Standard Rules creates a "specific action-processing rules" section for pretty much every interesting thing you might want to do in the engine.]
+Report an actor taking inventory when compliance is malicious: stop the action.
+Report an actor taking something when compliance is malicious: stop the action.
+Report an actor putting something on when compliance is malicious: stop the action.
+Report an actor inserting something into something when compliance is malicious: stop the action.
+Report an actor eating something when compliance is malicious: stop the action.
+Report an actor going when compliance is malicious: stop the action.
+Report an actor entering when compliance is malicious: stop the action.
+Report an actor exiting when compliance is malicious: stop the action.
+Report an actor getting off when compliance is malicious: stop the action.
+Report an actor looking when compliance is malicious: stop the action.
+Report an actor examining when compliance is malicious: stop the action.
+Report an actor looking under when compliance is malicious: stop the action.
+Report an actor searching when compliance is malicious: stop the action.
+Report an actor consulting something about something when compliance is malicious: stop the action.
+Report an actor locking something with when compliance is malicious: stop the action.
+Report an actor switching on when compliance is malicious: stop the action.
+Report an actor switching off when compliance is malicious: stop the action.
+Report an actor opening when compliance is malicious: stop the action.
+Report an actor closing when compliance is malicious: stop the action.
+Report an actor wearing when compliance is malicious: stop the action.
+Report an actor taking off when compliance is malicious: stop the action.
+Report an actor giving something to when compliance is malicious: stop the action.
+Report an actor answering something that when compliance is malicious: stop the action.
+Report an actor telling something about when compliance is malicious: stop the action.
+Report an actor asking something about when compliance is malicious: stop the action.
+Report an actor waiting when compliance is malicious: stop the action.
+Report an actor touching when compliance is malicious: stop the action.
+Report an actor waving when compliance is malicious: stop the action.
+Report an actor pulling when compliance is malicious: stop the action.
+Report an actor pushing when compliance is malicious: stop the action.
+Report an actor turning when compliance is malicious: stop the action.
+Report an actor squeezing when compliance is malicious: stop the action.
+Report an actor smelling when compliance is malicious: stop the action.
+Report an actor listening to when compliance is malicious: stop the action.
+Report an actor tasting when compliance is malicious: stop the action.
+Report an actor jumping when compliance is malicious: stop the action.
+Report an actor rubbing when compliance is malicious: stop the action.
+Report an actor waving hands when compliance is malicious: stop the action.
+
+Volume 3 - Game Content
+
+Book 0 - In the Beginning
+
+Before printing the banner text:
+	say "Welcome, adventurer. You are about to embark on a journey, just as exciting as The Beastmaster or Krull, but one that you experience on your personal microcomputer. In this incredible new medium, we use your personal microcomputer as a window into a dynamic new form of storytelling. Unlike a traditional book, where you turn pages and may get paper cuts, your choices drive the story forward, by typing on your microcomputer, and seeing the results pop up as words on your color TV. We like to call this incredible new medium, 'interactive fiction,' in that it is both fictional, which means made up, and it is interactive, which means active in an inter way.[paragraph break]";
+	say "Interactive fiction is like the books and stories that you have read before, but now with the ability to dynamically choose story choices based on choosing your own choices. This is a truly new form of entertainment, which literally no human being could possibly imagine, until this very moment.[paragraph break]";
+	say "The stage is set. Characters, story, gameplay, and plot, have all been carefully designed and redesigned over the past 49 years, all with one goal: to give you the ultimate adventuring interactive fiction computer gaming game experience. This game contains thousands of extremely lifelike characters, tens of thousands of ordinary and magical objects and weapons, and over six hundred thousand million exciting locations. Every moment of this game has been carefully engineered and crafted, with the best writing and programming known to art and science, in order to keep you maximally entertained.[paragraph break]";
+	say "Due to its sheer entertainment value, you are bound to lose yourself inside this extremely realistic and exceptionally challenging adventuring world. This game is hard, exceptionally hard, and it will make you feel as though you are really adventuring your adventures personally yourself. This is by far the most difficult game ever created. Make sure to take appropriate breaks, for bathroom and sleep. Do not operate heavy machinery while playing this game.[paragraph break]";
+	say "Now, sit back, and prepare to be thrilled and fascinated, with this fantastic magnum opus, this masterpiece of genius 'computer game' entertainment... from the future.[paragraph break]";
+	
+Rule for printing the banner text:
+	say "[bold type]Unwinnable By Design[roman type][line break]by GRIMOIRE (General Response Interface for Managing Operations In Recursive Environments) v 1.217a[line break]Copyright 1982, Gigantic Software, Inc. All Rights Reserved.[paragraph break]" instead.
+
+Book 1 - Starting Village
+
+Part 1 - Room and Objects
+
+The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got here. All text adventure games are legally required to begin this way. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
+
+An NPC is a transparent person in the Village. The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
+
+The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
+
+The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
+
+The clock is a thing.  It is in The Village.
+
+Part 2 - Custom Actions
+
+When Starting Room begins:
+	now the current response table is the Table of Starting Room Responses;
+
+Part 3 - Responses
 
 [This table overrides the default responses and behaviors for many of the Standard Actions in Inform 7.  In particular, if, for a specific scene, the performer matches the current actor, the verb matches the current verb, the first noun matches the first noun, OR the second noun matches the second noun, then the table entry applies for the current action.
 
@@ -66,7 +202,7 @@ Triggers-compliance indicates that, for the current action, the game should sile
 
 Response is the message to be printed in association with the current rule.  Ideally, it should be able to reference current-actor, current-verb, first-noun, and second-noun variables when printed.
 
-Keep in mind that if a particular entry of the first four is "", then the rule SHOULD trigger.
+Keep in mind that if a particular entry of the first four is "", then the rule SHOULD trigger if the other elements match.
 ]
 
 Table of Starting Room Responses
@@ -81,102 +217,9 @@ performer	verb	first-noun	second-noun	points	said-already	is-final	triggers-comp
 "yourself"	"taking"	""	""	0	false	false	false	"Taking things? How predictably adventurer-like..."
 "yourself"	"eating"	""	""	0	false	false	false	"Eating things won't solve your problems..."
 "the NPC"	"taking"	"the sword"	""	0	false	true	true	"Fine, the NPC takes the sword."
+""	"jumping"	""	""	0	false	true	false	"Jumping is hardly necessary right now."
+""	""	"the clock"	""	0	false	true	false	"The clock isn't important; leave it alone."
 
-Book 2 - Response Processing System
-
-To decide which outcome is the response table outcome for (T - a table-name):
-	if message-already-printed is true:
-		decide on unmanaged;
-	let current-actor be "[the actor part of the current action]";
-	let current-verb be "[the action name part of the current action]";
-	let current-noun be "";
-	if the noun is not nothing:
-		now current-noun is "[the noun]";
-	let current-second be "";
-	if the second noun is not nothing:
-		now current-second is "[the second noun]";
-	aside "Actor: '[current-actor]' Verb: '[current-verb]' Noun: '[current-noun]' Second: '[current-second]'";
-	repeat through T:
-		if (the verb entry is current-verb) and
-		   (the performer entry is current-actor) and
-		   (the first-noun entry is current-noun) and
-		   (the second-noun entry is current-second):
-			aside "Got a match on: [verb entry]";
-			if said-already entry is false or is-final entry is true:
-				say "[response entry][line break]";
-				decrease score by points entry;
-				if is-final entry is false:
-					now said-already entry is true;
-				if triggers-compliance entry is true:
-					now compliance-was-triggered is true;
-					now message-already-printed is true;
-					decide on authorized;
-				else:
-					decide on refused;
-	decide on unmanaged;
-
-Before an actor doing anything:
-	let current-outcome be the response table outcome for the current response table;
-	if current-outcome is refused:
-		aside "Refused!";
-		stop the action;
-	otherwise if current-outcome is authorized:
-		aside "Authorized!";
-		continue the action;
-	otherwise: [outcome is unmanaged]
-		aside "Unmanaged!";
-		continue the action.
-
-After reading a command:
-	now message-already-printed is false;
-	now compliance-was-triggered is false.
-
-Report an actor taking something when compliance-was-triggered is true:
-	stop the action.
-
-Report an actor dropping something when compliance-was-triggered is true:
-	stop the action.
-
-Report an actor examining something when compliance-was-triggered is true:
-	stop the action.
-
-Report an actor going when compliance-was-triggered is true:
-	stop the action.
-
-Report an actor eating something when compliance-was-triggered is true:
-	stop the action.
-
-[Add more report rules for other actions used in the game as needed]
-
-Volume 3 - Game Content
-
-Book 1 - Starting Village
-
-Part 1 - Room and Objects
-
-The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got here. All text adventure games are legally required to begin this way. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
-
-An NPC is a person in the Village. The indefinite article of the NPC is "an".  "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
-
-The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
-
-The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
-
-Part 2 - Custom Actions
-
-When Starting Room begins:
-	now the current response table is the Table of Starting Room Responses;
-	now the current-scene-threshold is -100;
-
-Before printing the banner text:
-	say "Welcome, adventurer. You are about to embark on a journey, just as exciting as The Beastmaster or Krull, but one that you experience on your personal microcomputer. In this incredible new medium, we use your personal microcomputer as a window into a dynamic new form of storytelling. Unlike a traditional book, where you turn pages and may get paper cuts, your choices drive the story forward, by typing on your microcomputer, and seeing the results pop up as words on your color TV. We like to call this incredible new medium, 'interactive fiction,' in that it is both fictional, which means made up, and it is interactive, which means active in an inter way.[paragraph break]";
-	say "Interactive fiction is like the books and stories that you have read before, but now with the ability to dynamically choose story choices based on choosing your own choices. This is a truly new form of entertainment, which literally no human being could possibly imagine, until this very moment.[paragraph break]";
-	say "The stage is set. Characters, story, gameplay, and plot, have all been carefully designed and redesigned over the past 49 years, all with one goal: to give you the ultimate adventuring interactive fiction computer gaming game experience. This game contains thousands of extremely lifelike characters, tens of thousands of ordinary and magical objects and weapons, and over six hundred thousand million exciting locations. Every moment of this game has been carefully engineered and crafted, with the best writing and programming known to art and science, in order to keep you maximally entertained.[paragraph break]";
-	say "Due to its sheer entertainment value, you are bound to lose yourself inside this extremely realistic and exceptionally challenging adventuring world. This game is hard, exceptionally hard, and it will make you feel as though you are really adventuring your adventures personally yourself. This is by far the most difficult game ever created. Make sure to take appropriate breaks, for bathroom and sleep. Do not operate heavy machinery while playing this game.[paragraph break]";
-	say "Now, sit back, and prepare to be thrilled and fascinated, with this fantastic magnum opus, this masterpiece of genius 'computer game' entertainment... from the future.[paragraph break]";
-	
-Rule for printing the banner text:
-	say "[bold type]Unwinnable By Design[roman type][line break]by GRIMOIRE (General Response Interface for Managing Operations In Recursive Environments) v 1.217a[line break]Copyright 1982, Gigantic Software, Inc. All Rights Reserved.[paragraph break]" instead.
 
 Book 2 - The Maze
 
@@ -196,7 +239,6 @@ verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	res
 
 When Maze begins:
 	now the current response table is the Table of Maze Responses;
-	now the current-scene-threshold is -300;
 	say "Great, you've completely ruined the starting room experience. I guess I'll have to move you to the next area. But trust me, you won't find it so easy to annoy me there!";
 	move the player to the Twisty Maze.
 
@@ -236,7 +278,6 @@ Before doing anything with the jeweled treasure when the current action is not t
 
 When Guess the Verb Room begins:
 	now the current response table is the Table of Verb Room Responses;
-	now the current-scene-threshold is -600;
 	say "FINE! YOU WIN! I'll just TELEPORT you past this PERFECTLY GOOD maze that I spent HOURS designing! -200 POINTS!";
 	move the player to the Treasure Room.
 
@@ -267,17 +308,8 @@ Carry out hinting:
 
 Book 2 - Standard Library Overrides
 
-Rule for printing a parser error when the latest parser error is the can't see any such thing error:
-	say "I don't see that here. Did you even LOOK at the room description?";
-
-Rule for printing a parser error when the latest parser error is the not a verb I recognise error:
-	say "I have an advanced degree in parsing natural language, and even I can't understand whatever it is you just typed. ";
-
 Rule for printing a parser error when the latest parser error is the I beg your pardon error:
 	say "Oh, so NOW you're being polite? After everything you've done?";
-
-Rule for printing a parser error:
-	say "[one of]Your inability to form coherent commands is starting to physically pain me.[or]Do you just mash random keys and hope something happens?[or]I'm starting to think you're doing this on purpose.[at random]"
 
 Book 3 - Testing and Debugging
 
