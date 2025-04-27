@@ -13,22 +13,37 @@ Release along with the introductory booklet and source text.
 
 Use scoring.
 
-Part 2 - Global Variables and State Tracking
+Part 2 - Global Variables
 
 The frustration-level is a number that varies. The frustration-level is 0.
 The current-scene-threshold is a number that varies. The current-scene-threshold is -100.
 The current response table is a table-name that varies.
 
-Book 2 - Scene Definitions
+Compliance-was-triggered is a truth state that varies. Compliance-was-triggered is false.
+Message-already-printed is a truth state that varies. Message-already-printed is false.
 
-The Starting Room is a scene. The Starting Room begins when play begins.
-The Maze is a scene. The Maze begins when the Starting Room ends.
-The Guess the Verb Room is a scene. The Guess the Verb Room begins when the Maze ends.
-The Boss Monster Room is a scene. The Boss Monster Room begins when the Guess the Verb Room ends.
-The Time-Out Room is a scene. The Time-Out Room begins when the Boss Monster Room ends.
-The Victory Celebration is a scene. The Victory Celebration begins when the Time-Out Room ends.
+Outcome is a kind of value. The outcomes are authorized, refused, and unmanaged.
 
-The Starting Room begins when going to the Village.
+Book 2- Anarchy
+
+["Truly, the only rules that exist are the ones that we impose upon ourselves."  -someone who is probably intelligent and dead]
+
+Persuasion rule for asking people to try doing something: persuasion succeeds.
+The can't take other people rule is not listed in any rulebook.
+The can't take people's possessions rule is not listed in any rulebook.
+The block giving rule is not listed in any rulebook.
+The can't eat unless edible rule is not listed in any rulebook.
+
+Book 3 - Scene Definitions
+
+The Starting Room is a scene. 
+The Maze is a scene. 
+The Guess the Verb Room is a scene. 
+The Boss Monster Room is a scene.
+The Time-Out Room is a scene. 
+The Victory Celebration is a scene.
+
+The Starting Room begins when play begins.
 The Starting Room ends when the score is less than -100.
 The Maze begins when going to The Twisty Maze.
 The Maze ends when the score is less than -300.
@@ -39,21 +54,40 @@ Volume 2 - Core Mechanics
 
 Book 1 - Response Tables
 
+[This table overrides the default responses and behaviors for many of the Standard Actions in Inform 7.  In particular, if, for a specific scene, the performer matches the current actor, the verb matches the current verb, the first noun matches the first noun, OR the second noun matches the second noun, then the table entry applies for the current action.
+
+Points lists the number of points DEDUCTED from the current score.
+
+Said-already is a flag indicating that the game has already said a current entry, and should skip to the next one in the table (if any).  If there are no other items in the table, the parser should skip to the default action for the rule.  After the parser says the current response, it should set the said-already field to true.
+
+Is-final is a flag indicating that, if this field is true, the parser should repeat the entry every time the command is made, without setting the said-entry field to true.
+
+Triggers-compliance indicates that, for the current action, the game should silently comply with the action, without prinitng any messages from the Standard Rules.  For example, if the action was the NPC taking the sword, if triggers-compliance is true, then the rule prints the message and applies the NPC taking the sword action without printing anything additional to the message in this particular rule.
+
+Response is the message to be printed in association with the current rule.  Ideally, it should be able to reference current-actor, current-verb, first-noun, and second-noun variables when printed.
+
+Keep in mind that if a particular entry of the first four is "", then the rule SHOULD trigger.
+]
+
 Table of Starting Room Responses
-verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
-"taking"	"the NPC"	""	0	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
-"taking"	"the NPC"	""	1	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
-"examining"	"the sword"	""	0	false	false	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
-"eating"	"the sword"	""	0	false	false	false	"You want to EAT the SWORD? Do you have any idea how swords work? They're not food!"
-"eating"	"the sword"	""	0	false	false	false	"This isn't SIM SWORD EATER 3000! I acknowledge your oral fixation on swords, and maybe you should have that professionally diagnosed, but at the moment we're just trying to get through this adventure! Can we get some positive teamwork here?"
-"eating"	"the sword"	""	2	false	false	true	"Fine, you eat the sword.  Happy now?"
-"eating"	"the sword"	""	0	false	true	false	"No.  You've already eaten it."
-"taking"	""	""	0	false	false	false	"Taking things? How predictably adventurer-like..."
-"eating"	""	""	0	false	false	false	"Eating things won't solve your problems..."
+performer	verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
+"yourself"	"taking"	"the NPC"	""	0	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
+"yourself"	"taking"	"the NPC"	""	1	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
+"yourself"	"examining"	"the sword"	""	0	false	false	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
+"yourself"	"eating"	"the sword"	""	0	false	false	false	"You want to EAT the SWORD? Do you have any idea how swords work? They're not food!"
+"yourself"	"eating"	"the sword"	""	0	false	false	false	"This isn't SIM SWORD EATER 3000! I acknowledge your oral fixation on swords, and maybe you should have that professionally diagnosed, but at the moment we're just trying to get through this adventure! Can we get some positive teamwork here?"
+"yourself"	"eating"	"the sword"	""	2	false	false	true	"Fine, you eat the sword.  Happy now?"
+"yourself"	"eating"	"the sword"	""	0	false	true	false	"No.  You've already eaten it."
+"yourself"	"taking"	""	""	0	false	false	false	"Taking things? How predictably adventurer-like..."
+"yourself"	"eating"	""	""	0	false	false	false	"Eating things won't solve your problems..."
+"the NPC"	"taking"	"the sword"	""	0	false	true	true	"Fine, the NPC takes the sword."
 
 Book 2 - Response Processing System
 
-To decide whether the current action is handled in (T - a table-name):
+To decide which outcome is the response table outcome for (T - a table-name):
+	if message-already-printed is true:
+		decide on unmanaged;
+	let current-actor be "[the actor part of the current action]";
 	let current-verb be "[the action name part of the current action]";
 	let current-noun be "";
 	if the noun is not nothing:
@@ -61,30 +95,58 @@ To decide whether the current action is handled in (T - a table-name):
 	let current-second be "";
 	if the second noun is not nothing:
 		now current-second is "[the second noun]";
-	[say "Current verb: '[current-verb]'  Current noun: '[current-noun]'  Currend second: '[current-second]'";]
+	aside "Actor: '[current-actor]' Verb: '[current-verb]' Noun: '[current-noun]' Second: '[current-second]'";
 	repeat through T:
-		[say "Trying [current-verb] with [verb entry]: ";]
-		if the verb entry is current-verb:
-			[say "Matched [verb entry]! First noun: '[first-noun entry]' Second noun: '[second-noun entry]'";]
-			if the first-noun entry is current-noun and the second-noun entry is current-second:
-				[say "Got it!!";]
-				if said-already entry is false or is-final entry is true:
-					say response entry;
-					decrease score by points entry;
-					if is-final entry is false:
-						now said-already entry is true;
-					if triggers-compliance entry is true:
-						decide yes;
-					decide no;
-			[otherwise:
-				say "aw shucks. ";]
-	decide no.
+		if (the verb entry is current-verb) and
+		   (the performer entry is current-actor) and
+		   (the first-noun entry is current-noun) and
+		   (the second-noun entry is current-second):
+			aside "Got a match on: [verb entry]";
+			if said-already entry is false or is-final entry is true:
+				say "[response entry][line break]";
+				decrease score by points entry;
+				if is-final entry is false:
+					now said-already entry is true;
+				if triggers-compliance entry is true:
+					now compliance-was-triggered is true;
+					now message-already-printed is true;
+					decide on authorized;
+				else:
+					decide on refused;
+	decide on unmanaged;
 
-Before doing anything:
-	if the current action is handled in the current response table:
+Before an actor doing anything:
+	let current-outcome be the response table outcome for the current response table;
+	if current-outcome is refused:
+		aside "Refused!";
 		stop the action;
-	otherwise:
+	otherwise if current-outcome is authorized:
+		aside "Authorized!";
+		continue the action;
+	otherwise: [outcome is unmanaged]
+		aside "Unmanaged!";
 		continue the action.
+
+After reading a command:
+	now message-already-printed is false;
+	now compliance-was-triggered is false.
+
+Report an actor taking something when compliance-was-triggered is true:
+	stop the action.
+
+Report an actor dropping something when compliance-was-triggered is true:
+	stop the action.
+
+Report an actor examining something when compliance-was-triggered is true:
+	stop the action.
+
+Report an actor going when compliance-was-triggered is true:
+	stop the action.
+
+Report an actor eating something when compliance-was-triggered is true:
+	stop the action.
+
+[Add more report rules for other actions used in the game as needed]
 
 Volume 3 - Game Content
 
@@ -94,7 +156,7 @@ Part 1 - Room and Objects
 
 The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got here. All text adventure games are legally required to begin this way. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
 
-The NPC is a person in the Village. "A non-player character is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."
+An NPC is a person in the Village. The indefinite article of the NPC is "an".  "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
@@ -234,6 +296,11 @@ Carry out debugging:
 	otherwise:
 		now debugging mode is false;
 		say "Debug mode deactivated.";
+
+To aside (T - text):
+	if debugging mode is true:
+		say "[T]";
+		say paragraph break.
 
 Skip to scene is an action applying to one number. Understand "skip to [number]" as skip to scene.
 Carry out skip to scene:
