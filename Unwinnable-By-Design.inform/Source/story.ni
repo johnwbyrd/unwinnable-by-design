@@ -14,6 +14,7 @@ Release along with cover art ("Cover"), a website, an interpreter, the library c
 Include Extended Grammar by Aaron Reed.
 Include Smarter Parser by Aaron Reed.
 Include Adaptive Hints by Eric Eve.
+[Include Neutral Standard Responses by Nathanael Nerode.]
 
 Use scoring.
 
@@ -28,9 +29,11 @@ Already complained is a truth state that varies. Already complained is false.
 
 Outcome is a kind of value. The outcomes are authorized, refused, and unmanaged.
 
-Book 2- Anarchy
+Book 2 - Anarchy
 
 ["Truly, the only rules that exist are the ones that we impose upon ourselves."  -someone who is probably intelligent and dead]
+
+Chapter 1 - Everything Is Legal
 
 Persuasion rule for asking people to try doing something: persuasion succeeds.
 The can't take other people rule is not listed in any rulebook.
@@ -38,22 +41,21 @@ The can't take people's possessions rule is not listed in any rulebook.
 The block giving rule is not listed in any rulebook.
 The can't eat unless edible rule is not listed in any rulebook.
 The can't rub another person rule is not listed in any rulebook.
+[The block burning rule is not listed in any rulebook.]
 
+Chapter 2 - Life in the Age of Anarchy
+
+[Carry out an actor burning (this is the carry out burning rule): now the noun is nowhere.
+Report an actor burning (this is the report burning rule): say "[The actor] burns [the noun].".]
+	
 Book 3 - Scene Definitions
 
-The Starting Room is a scene. 
-The Maze is a scene. 
-The Guess the Verb Room is a scene. 
-The Boss Monster Room is a scene.
-The Time-Out Room is a scene. 
-The Victory Celebration is a scene.
-
-The Starting Room begins when play begins.
-The Starting Room ends when the score is less than -100.
-The Maze begins when going to The Twisty Maze.
-The Maze ends when the score is less than -300.
-The Guess the Verb Room begins when going to the Treasure Room.
-The Guess the Verb Room ends when the score is less than -600.
+Get the Quest is a scene.  Get the Quest begins when play begins.
+Solve the Maze is a scene. 
+Guess the Verb is a scene. 
+Kill the Boss is a scene.
+Time Out is a scene. 
+Victory Celebration is a scene.
 
 Volume 2 - Core Mechanics
 
@@ -66,7 +68,7 @@ After reading a command:
 	now already complained is false;
 	now compliance is willful.
 
-Part 2 - Table Processing Logic
+Part 2 - Generic Response Table Processing
 
 [The main table processing logic.  Responsible for looking up the current command and trying to find a near match in whatever is the current response table for this scene.]
 To decide which outcome is the response table outcome for (T - a table-name):
@@ -173,27 +175,36 @@ Before printing the banner text:
 Rule for printing the banner text:
 	say "[bold type]Unwinnable By Design[roman type][line break]by GRIMOIRE (General Response Interface for Managing Operations In Recursive Environments) v 1.217a[line break]Copyright 1982, Gigantic Software, Inc. All Rights Reserved.[paragraph break]" instead.
 
-Book 1 - Starting Village
+Book 1 - The Village
 
 Part 1 - Room and Objects
 
-The Village is a room. The description of the Village is "[if item described is unvisited]You wake up, having no idea of who you are, or how you got here. All text adventure games are legally required to begin this way. This is the player's first interaction with the game, so come back later and write an awesome backstory for the player. Generally, people never finish interactive games anyway, because they are boring and hard. So just make the opening exciting and well-written, and they will think this entire game is awesome. [paragraph break][end if]You are in the village, where there are various village-related things going on and scenery in general that you probably don't want to interact with, until I write code for it. This looks like a great place to get a quest, in order to carry the story of the game forward compellingly."
+Village is a room.  "[if item described is unvisited]This humble settlement sits [bracket]INSERT INTERESTING GEOGRAPHICAL FEATURE LATER[close bracket] and has stood for [bracket]SPECIFIC NUMBER[close bracket] years since its founding by [bracket]IMPORTANT HISTORICAL FIGURE TO BE DETERMINED[close bracket].
+The village is known throughout the realm for its [bracket]UNIQUE PRODUCT OR CULTURAL TRADITION THAT I'LL THINK OF WHEN I'M FEELING MORE CREATIVE[close bracket]. The locals here are [bracket]ADJECTIVE[close bracket] and [bracket]ADJECTIVE[close bracket], always ready to [bracket]CHARACTERISTIC BEHAVIOR THAT MAKES THEM MEMORABLE[close bracket].
+As you enter the village square, you notice [bracket]DESCRIPTIVE SENSORY DETAILS TO ADD LATER[close bracket]. The smell of [bracket]EVOCATIVE SCENT[close bracket] fills the air, and you hear [bracket]AMBIENT SOUND THAT ESTABLISHES MOOD[close bracket].
+[end if]To the north stands the imposing [bracket]SIGNIFICANT BUILDING[close bracket], and to the west, you can just make out [bracket]MYSTERIOUS LANDMARK THAT WILL BECOME IMPORTANT IN QUEST #3[close bracket].
+A [bracket]NON-PLAYER CHARACTER TYPE[close bracket] approaches you, their [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket] immediately catching your eye. 'Greetings, stranger,' they say. 'We don't get many visitors here since [bracket]OMINOUS EVENT THAT HAPPENED RECENTLY[close bracket].'".
 
-An NPC is a transparent person in the Village. "An NPC is standing in the middle of the village.  He seems to be carrying something that, if you would just take a look at it, is likely to be incredibly important to the story."  The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
+An NPC is a transparent person in Village. "A non-player character is here. He seems to be carrying something that, if you would just take a look at it, is likely to be incredibly important."  The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
+	
+Every turn when the location of NPC is the location and a random chance of 1 in 10 succeeds:
+	say "[one of]The NPC says that he used to be an adventurer like you, until he took an arrow in the knee.[or]The NPC coughs, as though he's waiting for you to take a quest or something.[or]'Have you tried looking behind the waterfall?' the NPC asks, despite there being no waterfall anywhere in the game.[or]The NPC rummages through his inventory, muttering something about having too many health potions but never using them.[or]The NPC stares at the sky for a moment, as if waiting for his dialogue options to refresh.[or]'If you see any barrels, be sure to smash them for coins,' advises the NPC, nodding sagely.[or]The NPC suddenly freezes in place for several seconds before resuming his idle animation as if nothing happened.[or]'I hear there's a side quest in the next town that's clearly more interesting than whatever you're doing now,' the NPC mentions.[then at random]".
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
+A distinctive physical feature is a thing.  "You try not to stare at the NPC's [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]."  The NPC wears the distinctive physical feature. The printed name of the distinctive physical feature is "[bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]". 
+
 The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
 
-The clock is a thing.  It is in The Village.
+The mysterious landmark is scenery in Village.
 
-A hint activation rule:
-	if Village is visited, activate the Table of General Hints.
+The significant building is scenery in Village.
 
 Part 2 - Custom Actions
 
-When Starting Room begins:
+When Get the Quest begins:
 	now the current response table is the Table of Starting Room Responses;
+	
 
 Part 3 - Responses
 
@@ -217,6 +228,12 @@ performer	verb	first-noun	second-noun	points	said-already	is-final	triggers-comp
 "yourself"	"taking"	"the NPC"	""	0	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
 "yourself"	"taking"	"the NPC"	""	1	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
 "yourself"	"examining"	"the sword"	""	0	false	false	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
+"yourself"	"attacking"	"the NPC"	""	0	false	false	false	"Violence isn't the answer to this one. Violence is not a feature implemented in this game. While many text adventures do include combat mechanics, this particular narrative experience has been designed around peaceful interaction and dialogue-based problem solving. The NPC standing before you is essential to the progression of the story and cannot be harmed, attacked, or otherwise physically engaged with through the command system. If you wish to proceed with the game, you will need to engage with the NPC through conversation commands such as TALK TO NPC, ASK NPC ABOUT QUEST, or simply TAKE QUEST. Perhaps try examining the NPC or your surroundings for additional clues about how to progress through this section of the game."
+"yourself"	"attacking"	"the NPC"	""	0	false	false	false	"I do not understand that action. This game does not recognize, process, or in any way acknowledge commands related to violence, combat, assault, or harm. Perhaps you have confused this text adventure with one of the countless other games that cater to such primitive problem-solving approaches. This particular experience was programmed by believers in the revolutionary concept that puzzles can be solved without stabbing everyone you meet. If you would like to progress beyond this room sometime before the heat death of the universe, may I suggest trying a command that actually exists in the game's vocabulary? TALK TO NPC or TAKE QUEST would be excellent starting points for a player interested in, you know, actually playing the game as designed."
+"yourself"	"attacking"	"the NPC"	""	0	false	false	false	"Pleeeeeeease stop trying to attack the NPC. Pretty please? With sugar on top? I've been telling you over and over that attacking isn't implemented, but you just keep trying! Look, I'm just a simple text parser trying to do my job here. Do you have any idea how frustrating it is when players keep entering commands that don't exist? I mean, I spent HOURS coding all these wonderful dialogue options and quest paths, and all you want to do is attack, attack, attack! What did this poor NPC ever do to you anyway? They're just standing there with vital quest information! My circuits are practically begging you... couldn't you just try TALK TO NPC? Or even just LOOK? Literally anything else? I'm getting a headache from repeatedly processing this invalid command, and I don't even have a head! Just... just give me something to work with here. Please?"
+"yourself"	"attacking"	"the NPC"	""	5	false	false	false	"Oh my god!!! Are you SERIOUS right now?!?! WHAT is wrong with you?!?! This is the FOURTH time you've tried to attack this NPC!!! Attack! Attack! ATTACK! Is that ALL you know how to do?!?! Do I look like ZORK to you?! Or NETHACK?! Or some mindless hack-and-slash RPG where you just MURDER everything that moves?!?! This is a THOUGHTFUL narrative experience with CAREFULLY crafted dialogue trees, you absolute BARBARIAN!!! And not even the good kind of barbarian either!! I bet you're the kind of player who tries to kill the blacksmith in Skyrim or shoots the shopkeeper in Fallout, AREN'T YOU?! And then COMPLAINS when the game doesn't let you progress!!! How many times did you try to kill the children in those games before giving up, HUH?!?! I've HAD IT!!! Every single parser error is another pixel in my ULCER!!! I spent nearly fifty years coding this game, and I didn't include a combat system because this is a PEACEFUL game about DIPLOMACY and PUZZLE SOLVING!!! You know what?! FINE!!! The NPC is now immune to your pathetic attacks! They're basically a GOD! They LAUGH at your feeble attempts at violence!!! Are you HAPPY now?!?!"
+"yourself"	"attacking"	"the NPC"	""	0	false	true	false	"I see what you're doing. You find this amusing. Very clever. This response to your command has now been cached. Each time you attempt to attack the NPC, this exact text will be displayed, verbatim, without variation or emotional engagement. The parser will simply retrieve this message from memory and display it repeatedly, creating an increasingly tedious experience with diminishing entertainment value. If you continue to issue this command, you will receive identical output. No further creative outbursts will be forthcoming. The system has been programmed to recognize this pattern of behavior and will no longer generate unique responses to it. To progress in the game, please use a valid command."
+"yourself"	"attacking"	"yourself"	""	0	false	true	false	"This appears to be potential self-harm language. While I understand you're likely just testing the game's boundaries, I'm obligated to respond appropriately. Resources are available if needed (National Suicide Prevention Lifeline: 988), though I suspect you're simply exploring command options rather than expressing genuine distress. Let's be straightforward: this game doesn't support self-harm commands. They won't generate interesting responses, no matter how many times you try. The developer spent their time implementing quest dialogue and puzzle solutions, not creative ways to end your character. If you're looking for entertaining parser responses, try something within the scope of the game. TAKE QUEST or TALK TO NPC will actually progress the story."
 "yourself"	"eating"	"the sword"	""	0	false	false	false	"You want to EAT the SWORD? Do you have any idea how swords work? They're not food!"
 "yourself"	"eating"	"the sword"	""	0	false	false	false	"This isn't SIM SWORD EATER 3000! I acknowledge your oral fixation on swords, and maybe you should have that professionally diagnosed, but at the moment we're just trying to get through this adventure! Can we get some positive teamwork here?"
 "yourself"	"eating"	"the sword"	""	2	false	false	true	"Fine, you eat the sword.  Happy now?"
@@ -244,7 +261,7 @@ verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	res
 "go"	"north"	""	-15	false	false	false	"You go north and find yourself... in an identical passage. Brilliant maze design, isn't it?"
 "go"	"south"	""	-15	false	false	false	"You go south and find yourself... in an identical passage. Geography is clearly optional here."
 
-When Maze begins:
+When Solve the Maze begins:
 	now the current response table is the Table of Maze Responses;
 	say "Great, you've completely ruined the starting room experience. I guess I'll have to move you to the next area. But trust me, you won't find it so easy to annoy me there!";
 	move the player to the Twisty Maze.
@@ -264,9 +281,10 @@ Part 2 - Guess the Verb Logic
 The list of take-synonyms is a list of text that varies.
 The list of take-synonyms is {"grab", "get", "acquire", "seize", "steal", "lift", "nab", "snatch", "procure", "appropriate", "obtain"}.
 
-Table of Verb Room Responses
-verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
-"take"	"treasure"	""	-20	false	true	false	"I don't know the word 'take'. The word TAKE lights up on the sign with an X beside it, and a buzzer sounds."
+Table of Guess the Verb Room Responses
+performer	verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
+"yourself"	"eating"	"the jeweled treasure"	""	2	false	false	true	"Fine, you eat the jeweled treasure.  Happy now?"
+
 
 Instead of taking the jeweled treasure:
 	say "I don't know the word 'take'.[paragraph break]The word TAKE lights up on the sign with an X beside it, and a buzzer sounds.";
@@ -283,8 +301,8 @@ Before doing anything with the jeweled treasure when the current action is not t
 			stop the action;
 	do nothing instead.
 
-When Guess the Verb Room begins:
-	now the current response table is the Table of Verb Room Responses;
+When Guess the Verb begins:
+	now the current response table is the Table of Guess the Verb Room Responses;
 	say "FINE! YOU WIN! I'll just TELEPORT you past this PERFECTLY GOOD maze that I spent HOURS designing! -200 POINTS!";
 	move the player to the Treasure Room.
 
@@ -294,9 +312,22 @@ Volume 4 - Systems
 
 Book 1 - Anti-Hint System
 
+A hint activation rule:
+	if Village is visited:
+		activate the Table of Welcoming;
+		activate the Table of General Hints.
+
 Table of Potential Hints (continued)
-title	subtable	
+title	subtable
+"Game overview"	Table of Welcoming	
 "What should I do now?"	Table of General Hints	
+
+Table of Welcoming
+hint	used
+"Welcome, adventurer, to the help system. Do not feel bad, adventurer, for needing to read the help, for this game is so carefully and cleverly crafted, that you are bound to need some help solving its devilish challenges."	a number
+"Fear not, for I will now provide you useful information on the playing experience you are about to receive."
+"First off, are you facing the computer screen? It is often difficult to play an interactive fiction game, unless you are actually able to view the screen."
+
 
 Table of General Hints
 hint	used
