@@ -123,44 +123,44 @@ The interfere with stupid things rule is listed first in the action-processing r
 Part 4 - Oh You So Crazy Inform, Why No "Report An Actor Doing Something"?
 
 [This bit of repetitive silliness is because Inform doesn't allow us to create a "Report an actor doing something" rule.  In fact, the Standard Rules creates a "specific action-processing rules" section for pretty much every interesting thing you might want to do in the engine.]
-Report an actor taking inventory when compliance is malicious: stop the action.
-Report an actor taking something when compliance is malicious: stop the action.
-Report an actor putting something on when compliance is malicious: stop the action.
-Report an actor inserting something into something when compliance is malicious: stop the action.
+Report an actor answering something that when compliance is malicious: stop the action.
+Report an actor asking something about when compliance is malicious: stop the action.
+Report an actor closing when compliance is malicious: stop the action.
+Report an actor consulting something about something when compliance is malicious: stop the action.
 Report an actor eating something when compliance is malicious: stop the action.
-Report an actor going when compliance is malicious: stop the action.
 Report an actor entering when compliance is malicious: stop the action.
+Report an actor examining when compliance is malicious: stop the action.
 Report an actor exiting when compliance is malicious: stop the action.
 Report an actor getting off when compliance is malicious: stop the action.
-Report an actor looking when compliance is malicious: stop the action.
-Report an actor examining when compliance is malicious: stop the action.
-Report an actor looking under when compliance is malicious: stop the action.
-Report an actor searching when compliance is malicious: stop the action.
-Report an actor consulting something about something when compliance is malicious: stop the action.
-Report an actor locking something with when compliance is malicious: stop the action.
-Report an actor switching on when compliance is malicious: stop the action.
-Report an actor switching off when compliance is malicious: stop the action.
-Report an actor opening when compliance is malicious: stop the action.
-Report an actor closing when compliance is malicious: stop the action.
-Report an actor wearing when compliance is malicious: stop the action.
-Report an actor taking off when compliance is malicious: stop the action.
 Report an actor giving something to when compliance is malicious: stop the action.
-Report an actor answering something that when compliance is malicious: stop the action.
-Report an actor telling something about when compliance is malicious: stop the action.
-Report an actor asking something about when compliance is malicious: stop the action.
-Report an actor waiting when compliance is malicious: stop the action.
-Report an actor touching when compliance is malicious: stop the action.
-Report an actor waving when compliance is malicious: stop the action.
+Report an actor going when compliance is malicious: stop the action.
+Report an actor inserting something into something when compliance is malicious: stop the action.
+Report an actor jumping when compliance is malicious: stop the action.
+Report an actor listening to when compliance is malicious: stop the action.
+Report an actor locking something with when compliance is malicious: stop the action.
+Report an actor looking under when compliance is malicious: stop the action.
+Report an actor looking when compliance is malicious: stop the action.
+Report an actor opening when compliance is malicious: stop the action.
 Report an actor pulling when compliance is malicious: stop the action.
 Report an actor pushing when compliance is malicious: stop the action.
-Report an actor turning when compliance is malicious: stop the action.
-Report an actor squeezing when compliance is malicious: stop the action.
-Report an actor smelling when compliance is malicious: stop the action.
-Report an actor listening to when compliance is malicious: stop the action.
-Report an actor tasting when compliance is malicious: stop the action.
-Report an actor jumping when compliance is malicious: stop the action.
+Report an actor putting something on when compliance is malicious: stop the action.
 Report an actor rubbing when compliance is malicious: stop the action.
+Report an actor searching when compliance is malicious: stop the action.
+Report an actor smelling when compliance is malicious: stop the action.
+Report an actor squeezing when compliance is malicious: stop the action.
+Report an actor switching off when compliance is malicious: stop the action.
+Report an actor switching on when compliance is malicious: stop the action.
+Report an actor taking inventory when compliance is malicious: stop the action.
+Report an actor taking off when compliance is malicious: stop the action.
+Report an actor taking something when compliance is malicious: stop the action.
+Report an actor tasting when compliance is malicious: stop the action.
+Report an actor telling something about when compliance is malicious: stop the action.
+Report an actor touching when compliance is malicious: stop the action.
+Report an actor turning when compliance is malicious: stop the action.
+Report an actor waiting when compliance is malicious: stop the action.
 Report an actor waving hands when compliance is malicious: stop the action.
+Report an actor waving when compliance is malicious: stop the action.
+Report an actor wearing when compliance is malicious: stop the action.
 
 Volume 3 - Game Content
 
@@ -189,7 +189,7 @@ An NPC is a transparent person in Village. "A non-player character [if the NPC i
 Every turn when the location of the player is the Village and the location of NPC is the Village and a random chance of 1 in 20 succeeds:
 	say "[one of]The NPC says that he used to be an adventurer like you, until he took an arrow in the knee.[or]The NPC coughs, as though he's waiting for you to take a quest or something.[or]'Have you tried looking behind the waterfall?' the NPC asks, despite there being no waterfall anywhere in the game.[or]The NPC rummages through his inventory, muttering something about having too many health potions but never using them.[or]The NPC stares at the sky for a moment, as if waiting for his dialogue options to refresh.[or]'If you see any barrels, be sure to smash them for coins,' advises the NPC, nodding sagely.[or]The NPC suddenly freezes in place for several seconds before resuming his idle animation as if nothing happened.[or]'I hear there's a side quest in the next town that's clearly more interesting than whatever you're doing now,' the NPC mentions.[or]'We don't get many visitors here since [bracket]OMINOUS EVENT THAT HAPPENED RECENTLY[close bracket].'[or]'By the ice breath of Steve Meretzky! It is good to see new faces and taste freedom again.'[or]The NPC says a catchphrase that was probably copied from Monty Python. You do not laugh, because it is not funny.[or]'I know much of these woods. For example I know that the Crystal of Keldar will enable you to overcome the crystal tigers. Come back some time and I'll share a story with you!' says the NPC, eager to give random information to a complete stranger.[then at random]".
 
-The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
+The quest is a thing.  The description of the quest is "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
 A distinctive physical feature is a thing.  It has the description "You try not to stare at the NPC's [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]."  The NPC wears the distinctive physical feature. The printed name of the distinctive physical feature is "[bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]". 
 
@@ -204,7 +204,6 @@ Part 2 - Custom Actions
 When Get the Quest begins:
 	now the current response table is the Table of Starting Room Responses;
 	
-
 Part 3 - Responses
 
 [This table overrides the default responses and behaviors for many of the Standard Actions in Inform 7.  In particular, if, for a specific scene, the performer matches the current actor, the verb matches the current verb, the first noun matches the first noun, OR the second noun matches the second noun, then the table entry applies for the current action.
@@ -317,25 +316,49 @@ Book 1 - Anti-Hint System
 A hint activation rule:
 	if Village is visited:
 		activate the Table of Welcoming;
-		activate the Table of General Hints.
+		activate the Table of Village Hints.
 
 Table of Potential Hints (continued)
 title	subtable
 "Game overview"	Table of Welcoming	
-"What should I do now?"	Table of General Hints	
+"Village"	Table of Village Hints	
 
 Table of Welcoming
 hint	used
-"Welcome, adventurer, to the help system. Do not feel bad, adventurer, for needing to read the help, for this game is so carefully and cleverly crafted, that you are bound to need some help solving its devilish challenges."	a number
-"Fear not, for I will now provide you useful information on the playing experience you are about to receive."
+"Welcome, adventurer, to the help system. Do not feel bad, adventurer, for reading the help; this game is so fiendishly and cleverly crafted, that you are bound to need some help solving its intricate challenges."	a number
 "First off, are you facing the computer screen? It is often difficult to play an interactive fiction game, unless you are actually able to view the screen."
+"Very good, now it is important to make sure that your computer is plugged in and receiving electricity. If the computer is not currently on, it may impede your gaming experience somewhat."
+"All right, now you are all set to play!  Now at this point, you will need to type commands onto the computer keyboard in front of you, which in turn will cause the story to move forward and do all sorts of exciting things."
+"There are over three dozen verbs you can use in this game, all of which you will probably use during play."
+"These include, at least: ANSWER ASK CLOSE EAT ENTER EXIT GIVE INVENTORY JUMP LISTEN LOCK LOOK OPEN PULL PUSH 'PUT ON' RUB SEARCH SMELL SQUEEZE SWITCH 'TAKE OFF' TAKE TASTE TELL TOUCH TURN WAIT WAVE WEAR"
+"Some of these actions require no supporting nouns, some of them require one noun, and others require two nouns.  Don't worry, I'll try to explain it to you if I don't understand something."
+"You can give commands to someone by starting a sentence with their name, adding a comma, and the command you want them to follow: NPC, TAKE THE SWORD."
 
-
-Table of General Hints
+Table of Village Hints
 hint	used
-"Try exploring a bit."	a number
-"Then trying exploring a bit more."
-"Have you explored enough yet?"
+"Have you tried looking at the bus?"	a number
+"Have you tried searching the bus?"
+"Have you tried entering the bus?"
+"Have you tried exiting the bus?"
+"Have you tried opening the bus?"
+"Have you tried closing the bus?"
+"Have you tried touching the bus?"
+"Have you tried giving the bus to the NPC?"
+"Have you tried listening to the bus?"
+"Have you tried locking the bus?"
+"Have you tried switching on the bus?"
+"Have you tried switching off the bus?"
+"Have you tried pulling the bus?"
+"Have you tried attacking the bus?"
+"Have you tried wearing the bus?"
+"Have you tried taking off the bus?"
+"Have you tried asking the bus about the NPC?"
+"Have you tried eating the bus?"
+"Have you tried tasting the bus?"
+"Have you tried telling the bus about the NPC?"
+"Have you tried turning the bus?"
+"Have you tried waving the bus?"
+"Good, because there is no bus in the game."
 
 Book 2 - Standard Library Overrides
 
