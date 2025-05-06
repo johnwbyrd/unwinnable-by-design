@@ -14,7 +14,6 @@ Release along with cover art ("Cover"), a website, an interpreter, the library c
 Include Extended Grammar by Aaron Reed.
 Include Smarter Parser by Aaron Reed.
 Include Adaptive Hints by Eric Eve.
-[Include Neutral Standard Responses by Nathanael Nerode.]
 
 Use scoring.
 
@@ -27,6 +26,7 @@ Compliance is a deference that varies.  The compliance is initially willful.
 
 Already complained is a truth state that varies. Already complained is false.
 
+[An outcome is chosen by the response table processing logic, in order to decide the result of dealing with the particular response table.]
 Outcome is a kind of value. The outcomes are authorized, refused, and unmanaged.
 
 Book 2 - Anarchy
@@ -41,6 +41,7 @@ The can't take people's possessions rule is not listed in any rulebook.
 The block giving rule is not listed in any rulebook.
 The can't eat unless edible rule is not listed in any rulebook.
 The can't rub another person rule is not listed in any rulebook.
+The can't eat other people's food rule is not listed in any rulebook.
 [The block burning rule is not listed in any rulebook.]
 
 Chapter 2 - Life in the Age of Anarchy
@@ -163,7 +164,7 @@ Report an actor waving hands when compliance is malicious: stop the action.
 
 Volume 3 - Game Content
 
-Book 0 - In the Beginning
+Book 1 - In the Beginning
 
 Before printing the banner text:
 	say "Welcome, adventurer. You are about to embark on a journey, just as exciting as The Beastmaster or Krull, but one that you experience on your personal microcomputer. In this incredible new medium, we use your personal microcomputer as a window into a dynamic new form of storytelling. Unlike a traditional book, where you turn pages and may get paper cuts, your choices drive the story forward, by typing on your microcomputer, and seeing the results pop up as words on your color TV. We like to call this incredible new medium, 'interactive fiction,' in that it is both fictional, which means made up, and it is interactive, which means active in an inter way.[paragraph break]";
@@ -175,24 +176,22 @@ Before printing the banner text:
 Rule for printing the banner text:
 	say "[bold type]Unwinnable By Design[roman type][line break]by GRIMOIRE (General Response Interface for Managing Operations In Recursive Environments) v 1.217a[line break]Copyright 1982, Gigantic Software, Inc. All Rights Reserved.[paragraph break]" instead.
 
-Book 1 - The Village
+Book 2 - The Village
 
 Part 1 - Room and Objects
 
 Village is a room.  "[if item described is unvisited]This humble settlement sits [bracket]INSERT INTERESTING GEOGRAPHICAL FEATURE LATER[close bracket] and has stood for [bracket]SPECIFIC NUMBER[close bracket] years since its founding by [bracket]IMPORTANT HISTORICAL FIGURE TO BE DETERMINED[close bracket].
-The village is known throughout the realm for its [bracket]UNIQUE PRODUCT OR CULTURAL TRADITION THAT I'LL THINK OF WHEN I'M FEELING MORE CREATIVE[close bracket]. The locals here are [bracket]ADJECTIVE[close bracket] and [bracket]ADJECTIVE[close bracket], always ready to [bracket]CHARACTERISTIC BEHAVIOR THAT MAKES THEM MEMORABLE[close bracket].
-As you enter the village square, you notice [bracket]DESCRIPTIVE SENSORY DETAILS TO ADD LATER[close bracket]. The smell of [bracket]EVOCATIVE SCENT[close bracket] fills the air, and you hear [bracket]AMBIENT SOUND THAT ESTABLISHES MOOD[close bracket].
-[end if]To the north stands the imposing [bracket]SIGNIFICANT BUILDING[close bracket], and to the west, you can just make out [bracket]MYSTERIOUS LANDMARK THAT WILL BECOME IMPORTANT IN QUEST #3[close bracket].
-A [bracket]NON-PLAYER CHARACTER TYPE[close bracket] approaches you, their [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket] immediately catching your eye. 'Greetings, stranger,' they say. 'We don't get many visitors here since [bracket]OMINOUS EVENT THAT HAPPENED RECENTLY[close bracket].'".
+The village is known throughout the realm for its [bracket]UNIQUE PRODUCT OR CULTURAL TRADITION THAT I'LL THINK OF WHEN I'M FEELING MORE CREATIVE[close bracket]. The locals here are [bracket]ADJECTIVE[close bracket] and [bracket]ADJECTIVE[close bracket], always ready to [bracket]CHARACTERISTIC BEHAVIOR THAT MAKES THEM MEMORABLE[close bracket]. As you enter the village square, you notice [bracket]DESCRIPTIVE SENSORY DETAILS TO ADD LATER[close bracket]. The smell of [bracket]EVOCATIVE SCENT[close bracket] fills the air, and you hear [bracket]AMBIENT SOUND THAT ESTABLISHES MOOD[close bracket].
+[else]You're in the village. [end if][if the location of the significant building is the Village]To the north stands the imposing [bracket]SIGNIFICANT BUILDING[close bracket]. [end if][if the location of the mysterious landmark is the Village]To the west, you can just make out [bracket]MYSTERIOUS LANDMARK THAT WILL BECOME IMPORTANT IN QUEST #3[close bracket].[end if]".
 
-An NPC is a transparent person in Village. "A non-player character is here. He seems to be carrying something that, if you would just take a look at it, is likely to be incredibly important."  The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
+An NPC is a transparent person in Village. "A non-player character [if the NPC is wearing the distinctive physical feature]with a [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket][end if] is here. [if the NPC is carrying the quest]He seems to be carrying something that, if you would just examine the NPC, is likely to be incredibly important.[end if]". The indefinite article of the NPC is "an".  The description of the NPC is "A non-player character, also known as an NPC, is here, to interact with you in an incredibly lifelike manner. The NPC [if the NPC is wearing something]has [a list of things worn by the NPC] and [end if]is carrying [a list of things carried by the NPC]."  Understand "non" or "non-player" or "player" or "character" or "char" as the NPC.
 	
-Every turn when the location of NPC is the location and a random chance of 1 in 10 succeeds:
-	say "[one of]The NPC says that he used to be an adventurer like you, until he took an arrow in the knee.[or]The NPC coughs, as though he's waiting for you to take a quest or something.[or]'Have you tried looking behind the waterfall?' the NPC asks, despite there being no waterfall anywhere in the game.[or]The NPC rummages through his inventory, muttering something about having too many health potions but never using them.[or]The NPC stares at the sky for a moment, as if waiting for his dialogue options to refresh.[or]'If you see any barrels, be sure to smash them for coins,' advises the NPC, nodding sagely.[or]The NPC suddenly freezes in place for several seconds before resuming his idle animation as if nothing happened.[or]'I hear there's a side quest in the next town that's clearly more interesting than whatever you're doing now,' the NPC mentions.[then at random]".
+Every turn when the location of the player is the Village and the location of NPC is the Village and a random chance of 1 in 20 succeeds:
+	say "[one of]The NPC says that he used to be an adventurer like you, until he took an arrow in the knee.[or]The NPC coughs, as though he's waiting for you to take a quest or something.[or]'Have you tried looking behind the waterfall?' the NPC asks, despite there being no waterfall anywhere in the game.[or]The NPC rummages through his inventory, muttering something about having too many health potions but never using them.[or]The NPC stares at the sky for a moment, as if waiting for his dialogue options to refresh.[or]'If you see any barrels, be sure to smash them for coins,' advises the NPC, nodding sagely.[or]The NPC suddenly freezes in place for several seconds before resuming his idle animation as if nothing happened.[or]'I hear there's a side quest in the next town that's clearly more interesting than whatever you're doing now,' the NPC mentions.[or]'We don't get many visitors here since [bracket]OMINOUS EVENT THAT HAPPENED RECENTLY[close bracket].'[or]'By the ice breath of Steve Meretzky! It is good to see new faces and taste freedom again.'[or]The NPC says a catchphrase that was probably copied from Monty Python. You do not laugh, because it is not funny.[or]'I know much of these woods. For example I know that the Crystal of Keldar will enable you to overcome the crystal tigers. Come back some time and I'll share a story with you!' says the NPC, eager to give random information to a complete stranger.[then at random]".
 
 The quest is a thing.  "It's a quest, which is incredibly important for you to acquire."  The NPC carries the quest.
 
-A distinctive physical feature is a thing.  "You try not to stare at the NPC's [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]."  The NPC wears the distinctive physical feature. The printed name of the distinctive physical feature is "[bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]". 
+A distinctive physical feature is a thing.  It has the description "You try not to stare at the NPC's [bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]."  The NPC wears the distinctive physical feature. The printed name of the distinctive physical feature is "[bracket]DISTINCTIVE PHYSICAL FEATURE[close bracket]". 
 
 The sword is a thing. The player carries the sword. The description of the sword is "It's a sword."
 
@@ -226,8 +225,11 @@ Keep in mind that if a particular entry of the first four is "", then the rule S
 Table of Starting Room Responses
 performer	verb	first-noun	second-noun	points	said-already	is-final	triggers-compliance	response
 "yourself"	"taking"	"the NPC"	""	0	false	false	false	"You can't just take people in adventure games. That's kidnapping, and this isn't that kind of game."
+[comment]
 "yourself"	"taking"	"the NPC"	""	1	false	true	true	"FINE! You pick up the NPC, who is extremely uncomfortable with this situation. The NPC is now awkwardly in your inventory, wondering about its life choices."
-"yourself"	"examining"	"the sword"	""	0	false	false	false	"It's a sword. Like in every other game. Maybe it's magical. Who knows? The game designer certainly didn't specify."
+"yourself"	"examining"	"the sword"	""	0	false	false	false	"It's a sword."
+"yourself"	"examining"	"the sword"	""	0	false	false	false	"No, seriously, it's a sword."
+"yourself"	"examining"	"the sword"	""	0	false	false	false	"Okay. This is my third time telling you: it's a sword. This is an adventure game. All adventure games are required to have swords. This is a sword. End of story."
 "yourself"	"attacking"	"the NPC"	""	0	false	false	false	"Violence isn't the answer to this one. Violence is not a feature implemented in this game. While many text adventures do include combat mechanics, this particular narrative experience has been designed around peaceful interaction and dialogue-based problem solving. The NPC standing before you is essential to the progression of the story and cannot be harmed, attacked, or otherwise physically engaged with through the command system. If you wish to proceed with the game, you will need to engage with the NPC through conversation commands such as TALK TO NPC, ASK NPC ABOUT QUEST, or simply TAKE QUEST. Perhaps try examining the NPC or your surroundings for additional clues about how to progress through this section of the game."
 "yourself"	"attacking"	"the NPC"	""	0	false	false	false	"I do not understand that action. This game does not recognize, process, or in any way acknowledge commands related to violence, combat, assault, or harm. Perhaps you have confused this text adventure with one of the countless other games that cater to such primitive problem-solving approaches. This particular experience was programmed by believers in the revolutionary concept that puzzles can be solved without stabbing everyone you meet. If you would like to progress beyond this room sometime before the heat death of the universe, may I suggest trying a command that actually exists in the game's vocabulary? TALK TO NPC or TAKE QUEST would be excellent starting points for a player interested in, you know, actually playing the game as designed."
 "yourself"	"attacking"	"the NPC"	""	0	false	false	false	"Pleeeeeeease stop trying to attack the NPC. Pretty please? With sugar on top? I've been telling you over and over that attacking isn't implemented, but you just keep trying! Look, I'm just a simple text parser trying to do my job here. Do you have any idea how frustrating it is when players keep entering commands that don't exist? I mean, I spent HOURS coding all these wonderful dialogue options and quest paths, and all you want to do is attack, attack, attack! What did this poor NPC ever do to you anyway? They're just standing there with vital quest information! My circuits are practically begging you... couldn't you just try TALK TO NPC? Or even just LOOK? Literally anything else? I'm getting a headache from repeatedly processing this invalid command, and I don't even have a head! Just... just give me something to work with here. Please?"
@@ -245,7 +247,7 @@ performer	verb	first-noun	second-noun	points	said-already	is-final	triggers-comp
 ""	""	"the clock"	""	0	false	true	false	"The clock isn't important; leave it alone."
 
 
-Book 2 - The Maze
+Book 3 - The Maze
 
 Part 1 - Room and Objects
 
@@ -266,7 +268,7 @@ When Solve the Maze begins:
 	say "Great, you've completely ruined the starting room experience. I guess I'll have to move you to the next area. But trust me, you won't find it so easy to annoy me there!";
 	move the player to the Twisty Maze.
 
-Book 3 - Guess the Verb Room
+Book 4 - Guess the Verb Room
 
 Part 1 - Room and Objects
 
