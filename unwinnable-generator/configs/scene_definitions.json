@@ -1,0 +1,20 @@
+{
+  "scenes": {
+    "Get the Quest": {
+      "room_name": "Village",
+      "objects": ["sword", "quest", "distinctive physical feature"],
+      "scenery": ["mysterious landmark", "significant building"],
+      "npcs": ["NPC"]
+    },
+    "Solve the Maze": {
+      "room_name": "Twisty Maze",
+      "objects": ["rubber ducky"],
+      "scenery": [],
+      "npcs": []
+    }
+  },
+  "global_verbs": [
+    "taking", "examining", "attacking", "eating", "wearing", "jumping", "kissing", "talking to", "giving", "showing"
+  ],
+  "performers": ["yourself", "the NPC"]
+}
