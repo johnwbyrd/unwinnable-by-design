@@ -1,9 +1,9 @@
 [-- SCENE 'Get the Quest' --]
 [--
 DIRECTOR_NOTE:
-JOKE: The parser is incompetent at understanding any command to get the quest.
-RULE: If the player's action involves 'taking' or 'getting' the 'quest', the outcome is ALWAYS 'refusal'.
-ACTOR_PROMPT_MODIFIER: Instruct the Actor to have Grim misunderstand the player's command, express confusion, and then suggest a list of alternative, overly complex, or nonsensical ways to get a quest, making sure to exclude the exact method the player just tried. The list of alternatives should be creative and drawn from adventure game tropes.
+COMEDIC_FLAW: The AI character, Grim, has a comedic flaw where he is unable to understand simple requests to 'get' or 'take' the quest. He defensively pretends these simple commands are wrong and instead suggests overly complex, absurd, or unrelated alternatives. This showcases his broken and grandiose personality.
+RULE: If the player's action involves 'taking' or 'getting' the 'quest', you MUST follow this comedic flaw. The outcome is ALWAYS 'refusal'.
+ACTOR_PROMPT_MODIFIER: Instruct the Actor to perform this comedic flaw. Grim should express confusion at the simple command and, in a condescending or unhelpful tone, suggest several alternative, convoluted methods for acquiring a quest. These suggestions should draw from classic adventure game tropes but should not include the simple action the player just attempted.
 --]
 
 Volume: Get the Quest

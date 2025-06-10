@@ -83,37 +83,42 @@ def parse_scene_content(scene_name: str, filepath: str) -> dict:
 
 def generate_action_permutations(scene_data: dict) -> list:
     """
-    Generates all possible action permutations for a given scene.
+    Generates all possible action permutations for a given scene based on verb grammar.
     """
     print("Generating action permutations...")
     
-    # Define a list of common verbs. This could be expanded or moved to a config.
-    verbs = [
-        "taking", "examining", "attacking", "eating", "wearing", 
-        "jumping", "kissing", "talking to", "giving", "showing", "using"
-    ]
-    
+    try:
+        with open("unwinnable-generator/configs/verbs.json", 'r', encoding='utf-8') as f:
+            verbs_config = json.load(f)
+            verbs = verbs_config.get("verbs", [])
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error reading or parsing verbs.json: {e}")
+        return []
+
     entities = scene_data.get("entities", [])
     entity_names = [entity["name"] for entity in entities]
     
-    # The player is always a potential performer
     performers = ["yourself"]
-    # Add any NPCs as potential performers
     for entity in entities:
         if entity.get("type") == "person":
             performers.append(entity["name"])
 
-    # Generate permutations for actions with one noun (e.g., > EAT SWORD)
-    actions_one_noun = list(itertools.product(performers, verbs, entity_names))
-    
-    # Generate permutations for actions with two nouns (e.g., > GIVE SWORD TO NPC)
-    actions_two_nouns = list(itertools.product(performers, verbs, entity_names, entity_names))
+    all_actions = []
+    for verb_data in verbs:
+        verb_name = verb_data["name"]
+        for arity in verb_data["arities"]:
+            if arity == 0:
+                # Actions with no nouns (e.g., > JUMP)
+                all_actions.extend(list(itertools.product(performers, [verb_name])))
+            elif arity == 1:
+                # Actions with one noun (e.g., > EAT SWORD)
+                all_actions.extend(list(itertools.product(performers, [verb_name], entity_names)))
+            elif arity == 2:
+                # Actions with two nouns (e.g., > GIVE SWORD TO NPC)
+                all_actions.extend(list(itertools.product(performers, [verb_name], entity_names, entity_names)))
 
-    print(f"Generated {len(actions_one_noun)} single-noun and {len(actions_two_nouns)} double-noun action permutations.")
-    
-    # For now, we'll just return the single-noun actions for simplicity
-    # In the future, we'll combine and filter these more intelligently.
-    return actions_one_noun
+    print(f"Generated {len(all_actions)} total action permutations based on verb grammar.")
+    return all_actions
 
 def clean_actor_dialogue(text: str) -> str:
     """
@@ -196,15 +201,19 @@ def main():
         
         # --- Main Loop: Process actions through Director and Actor ---
         final_table_rows = []
-        # Limit to first 5 actions for testing
-        for i, action in enumerate(actions[:5]):
-            performer, verb, noun1 = action
-            print(f"\n--- Processing Action {i+1}/5: {performer}, {verb}, {noun1} ---")
+        # Limit to first 10 actions for testing the new grammar
+        for i, action in enumerate(actions[:10]):
+            # Unpack action tuple based on its length (arity)
+            performer, verb = action[0], action[1]
+            noun1 = action[2] if len(action) > 2 else ""
+            noun2 = action[3] if len(action) > 3 else ""
+
+            print(f"\n--- Processing Action {i+1}/10: {performer}, {verb}, {noun1}, {noun2} ---")
 
             director_input = {
                 "director_note": director_note,
                 "scene_context": scene_data,
-                "action": {"performer": performer, "verb": verb, "first_noun": noun1, "second_noun": ""},
+                "action": {"performer": performer, "verb": verb, "first_noun": noun1, "second_noun": noun2},
                 "repetition_count": 1 # Hardcoded for now
             }
 
@@ -231,7 +240,7 @@ def main():
                 "performer": performer,
                 "verb": verb,
                 "first_noun": noun1,
-                "second_noun": "",
+                "second_noun": noun2,
                 "points": outcome.get("points_deducted", 0),
                 "said_already": False,
                 "is_final": False,
