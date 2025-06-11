@@ -6,4 +6,6 @@ Index/
 *.blurb
 *.pyc
 *.pyo
+venv/
+
 

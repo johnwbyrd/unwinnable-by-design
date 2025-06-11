@@ -1,14 +1,43 @@
 {
   "staff": {
     "cheap": {
-      "parser": "anthropic/claude-3-haiku",
-      "dramaturg": "anthropic/claude-3-haiku",
-      "writer": "anthropic/claude-3-haiku"
+      "parser": {
+        "model_name": "mistral-small3.1:latest",
+        "base_url": "http://localhost:11434/v1",
+        "api_type": "ollama"
+      },
+      "dramaturg": {
+        "model_name": "mistral-small3.1:latest",
+        "base_url": "http://localhost:11434/v1",
+        "api_type": "ollama"
+      },
+      "writer": {
+        "model_name": "mistral-small3.1:latest",
+        "base_url": "http://localhost:11434/v1",
+        "api_type": "ollama"
+      }
     },
     "expensive": {
-      "parser": "anthropic/claude-3-sonnet",
-      "dramaturg": "anthropic/claude-3-opus",
-      "writer": "anthropic/claude-3-opus"
+      "parser": {
+        "model_name": "openai/gpt-4o",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_type": "openrouter"
+      },
+      "dramaturg": {
+        "model_name": "openai/gpt-4o",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_type": "openrouter"
+      },
+      "writer": {
+        "model_name": "openai/gpt-4o",
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_type": "openrouter"
+      }
     }
+  },
+  "default_model_config": {
+    "model_name": "mistralai/mistral-7b-instruct-free",
+    "base_url": "https://openrouter.ai/api/v1",
+    "api_type": "openrouter"
   }
 }

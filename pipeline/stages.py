@@ -1,5 +1,6 @@
 import os
 import json
+import re
 import itertools
 from . import api_client
 
@@ -37,17 +38,34 @@ class AIStage(Stage):
             return ""
 
     def _load_model_config(self) -> dict:
-        """Loads the model names from the central config file."""
+        """Loads the model configurations from the central config file."""
         try:
             with open("pipeline/configs/models.json", 'r', encoding='utf-8') as f:
-                return json.load(f).get("staff", {})
+                return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             print("Model config not found or invalid. Returning empty config.")
             return {}
 
-    def get_model_for_staff(self, staff: str) -> str:
-        """Gets the appropriate model for the selected staff level."""
-        return self.models.get(staff, {}).get(self.role, "mistralai/mistral-7b-instruct-free")
+    def get_model_config_for_staff(self, staff: str) -> dict:
+        """Gets the appropriate model configuration for the selected staff level and role."""
+        staff_config = self.models.get("staff", {}).get(staff, {})
+        role_config = staff_config.get(self.role)
+        
+        if role_config and isinstance(role_config, dict) and \
+           all(k in role_config for k in ["model_name", "base_url", "api_type"]):
+            return role_config
+        
+        default_config = self.models.get("default_model_config", {})
+        if all(k in default_config for k in ["model_name", "base_url", "api_type"]):
+            print(f"Warning: Using default model config for role '{self.role}' and staff '{staff}'.")
+            return default_config
+        
+        print(f"Critical Warning: Default model config is missing or incomplete. Using hardcoded fallback for role '{self.role}'.")
+        return {
+            "model_name": "mistralai/mistral-7b-instruct-free",
+            "base_url": "https://openrouter.ai/api/v1",
+            "api_type": "openrouter"
+        }
 
 
 class ParseStage(AIStage):
@@ -65,11 +83,11 @@ class ParseStage(AIStage):
         return os.path.join(source_dir, filename)
 
     def execute(self, scene_data: dict, **kwargs) -> dict:
-        """
-        Executes the parsing logic.
-        """
         staff = kwargs.get("staff", "cheap")
-        model_name = self.get_model_for_staff(staff)
+        model_config = self.get_model_config_for_staff(staff)
+        model_name = model_config["model_name"]
+        base_url = model_config["base_url"]
+        api_type = model_config["api_type"]
 
         if scene_data.get("approved") or (scene_data.get("entities") and scene_data.get("narrative_structure")):
             print("Scene data already parsed and approved. Skipping ParseStage.")
@@ -85,16 +103,51 @@ class ParseStage(AIStage):
             print(f"Error: Source file not found for scene '{scene_name}' at '{source_path}'")
             raise
 
-        print(f"Calling Parser LLM ('{model_name}') for scene '{scene_name}'...")
-        parsed_data = api_client.call_openrouter(
-            model_name,
-            self.prompt,
-            source_content
+        print(f"Calling Parser LLM ('{model_name}' via {api_type} at {base_url}) for scene '{scene_name}' (expecting text response)...")
+        
+        parser_user_prompt = source_content
+
+        raw_response_text = api_client.call_openrouter_for_text(
+            model_name=model_name,
+            system_prompt=self.prompt,
+            user_prompt=parser_user_prompt,
+            base_url=base_url,
+            api_type=api_type
         )
 
-        if not parsed_data:
-            print("Parser LLM call failed. Cannot proceed.")
-            raise RuntimeError("Failed to parse scene source from LLM.")
+        if not raw_response_text:
+            print("Parser LLM call (for text) failed. Cannot proceed.")
+            raise RuntimeError("Failed to get text response from LLM for parsing.")
+
+        parsed_data = None
+        try:
+            clean_text = raw_response_text.strip()
+            if clean_text.startswith("```json"):
+                clean_text = clean_text[7:]
+            if clean_text.startswith("```"): 
+                clean_text = clean_text[3:]
+            if clean_text.endswith("```"):
+                clean_text = clean_text[:-3]
+            clean_text = clean_text.strip()
+            
+            parsed_data = json.loads(clean_text)
+        except json.JSONDecodeError:
+            print("Direct JSON parsing of parser response failed. Trying regex extraction.")
+            json_match = re.search(r'\{[\s\S]*\}', clean_text) 
+            if json_match:
+                json_str = json_match.group(0)
+                try:
+                    parsed_data = json.loads(json_str)
+                except json.JSONDecodeError as e_regex:
+                    print(f"Failed to decode JSON from regex-extracted string: {e_regex}")
+                    print(f"Regex extracted string was: {json_str}")
+            else:
+                print("Could not find any JSON-like object in the parser's text response via regex.")
+        
+        if not parsed_data or not isinstance(parsed_data, dict):
+            print("Failed to parse valid JSON object from LLM text response. Cannot proceed.")
+            print(f"Raw response was: {raw_response_text}")
+            raise RuntimeError("Failed to parse scene source from LLM after attempting text and regex.")
 
         scene_data.update(parsed_data)
         print("Successfully parsed scene source.")
@@ -120,9 +173,6 @@ class GenerateActionsStage(Stage):
             return []
 
     def execute(self, scene_data: dict, **kwargs) -> dict:
-        """
-        Executes the action generation logic. Skips if actions already exist.
-        """
         if scene_data.get("actions"):
             print("Actions already exist for this scene. Skipping GenerateActionsStage.")
             return scene_data
@@ -148,7 +198,7 @@ class GenerateActionsStage(Stage):
                     permutations = itertools.product(performers, [verb_name], entity_names, entity_names)
 
                 for p in permutations:
-                    if len(p) > 3 and p[2] == p[3]:
+                    if len(p) > 3 and p[2] == p[3]: 
                         continue
                     
                     action_id = "-".join(str(s).replace(" ", "_") for s in p if s)
@@ -177,12 +227,12 @@ class DramaturgStage(AIStage):
         super().__init__(role="dramaturg")
 
     def execute(self, scene_data: dict, **kwargs) -> dict:
-        """
-        Executes the Dramaturg logic for each un-approved action.
-        """
         limit = kwargs.get("limit")
         staff = kwargs.get("staff", "cheap")
-        model_name = self.get_model_for_staff(staff)
+        model_config = self.get_model_config_for_staff(staff)
+        model_name = model_config["model_name"]
+        base_url = model_config["base_url"]
+        api_type = model_config["api_type"]
 
         if not scene_data.get("actions"):
             print("No actions found to process. Skipping DramaturgStage.")
@@ -191,17 +241,19 @@ class DramaturgStage(AIStage):
         actions_to_process = scene_data["actions"]
         if limit is not None:
             print(f"Limiting Dramaturg processing to {limit} actions.")
-            actions_to_process = [a for a in actions_to_process if not a.get("dramaturg_notes")]
+            actions_to_process = [a for a in actions_to_process if not (a.get("dramaturg_notes") and a.get("beat"))] 
             actions_to_process = actions_to_process[:limit]
 
         for action in actions_to_process:
-            if action.get("approved"):
+            if action.get("approved"): 
                 continue
             
-            if action.get("dramaturg_notes") and action.get("beat"):
+            if action.get("dramaturg_notes") and action.get("beat") and \
+               action.get("dramaturg_notes", {}).get("approved") is not False and \
+               all(s.get("approved") is not False for s in action.get("beat",[])): 
                 continue
 
-            print(f"Running Dramaturg ('{model_name}') for action: {action['id']}")
+            print(f"Running Dramaturg ('{model_name}' via {api_type} at {base_url}) for action: {action['id']}")
 
             dramaturg_input = {
                 "scene_context": {
@@ -210,21 +262,28 @@ class DramaturgStage(AIStage):
                     "narrative_structure": scene_data.get("narrative_structure"),
                     "entities": scene_data.get("entities")
                 },
-                "action_to_evaluate": action
+                "action_to_evaluate": {key: val for key, val in action.items() if key not in ["dramaturg_notes", "beat"]} 
             }
 
-            response_data = api_client.call_openrouter(
-                model_name,
-                self.prompt,
-                json.dumps(dramaturg_input)
+            response_data = api_client.call_openrouter( 
+                model_name=model_name,
+                system_prompt=self.prompt,
+                user_prompt=json.dumps(dramaturg_input),
+                base_url=base_url,
+                api_type=api_type
             )
 
             if not response_data:
                 print(f"Dramaturg LLM call failed for action {action['id']}. Skipping.")
                 continue
 
-            action["dramaturg_notes"] = response_data.get("dramaturg_notes")
-            action["beat"] = response_data.get("beat")
+            action["dramaturg_notes"] = response_data.get("dramaturg_notes", {"approved": False}) 
+            action["beat"] = response_data.get("beat", []) 
+            if "approved" not in action["dramaturg_notes"]:
+                action["dramaturg_notes"]["approved"] = False
+            for step in action["beat"]:
+                if "approved" not in step:
+                    step["approved"] = False
             print(f"Successfully designed beat for action {action['id']}.")
 
         return scene_data
@@ -237,69 +296,70 @@ class WriterStage(AIStage):
         super().__init__(role="writer")
 
     def execute(self, scene_data: dict, **kwargs) -> dict:
-        """
-        Executes the Writer logic for each beat step that needs dialogue.
-        """
         limit = kwargs.get("limit")
         staff = kwargs.get("staff", "cheap")
-        model_name = self.get_model_for_staff(staff)
+        model_config = self.get_model_config_for_staff(staff)
+        model_name = model_config["model_name"]
+        base_url = model_config["base_url"]
+        api_type = model_config["api_type"]
 
         if not scene_data.get("actions"):
             print("No actions found to process. Skipping WriterStage.")
             return scene_data
 
-        actions_to_process = scene_data["actions"]
-        if limit is not None:
-            print(f"Limiting Writer processing to {limit} actions.")
-            # A bit more complex: find the first N actions that have steps needing dialogue
-            limited_actions = []
-            count = 0
-            for action in actions_to_process:
-                if any(not step.get("dialogue") for step in action.get("beat", [])):
-                    limited_actions.append(action)
-                    count += 1
-                    if count >= limit:
-                        break
-            actions_to_process = limited_actions
+        actions_processed_count = 0
+        for action in scene_data["actions"]:
+            if limit is not None and actions_processed_count >= limit:
+                print(f"Writer processing limit of {limit} actions reached.")
+                break
 
-
-        for action in actions_to_process:
-            if action.get("approved") or not action.get("beat"):
+            if action.get("approved") or not action.get("beat"): 
                 continue
 
+            action_needs_writing = False
             for step in action["beat"]:
-                if step.get("approved") or step.get("dialogue"):
+                if not step.get("approved") and not step.get("dialogue"):
+                    action_needs_writing = True
+                    break
+            
+            if not action_needs_writing:
+                continue
+
+            print(f"Processing Writer for action {action['id']}...")
+            for step_idx, step in enumerate(action["beat"]):
+                if step.get("approved") or step.get("dialogue"): 
                     continue
 
-                print(f"Running Writer ('{model_name}') for action {action['id']}, step {step['step']}...")
+                print(f"Running Writer ('{model_name}' via {api_type} at {base_url}) for action {action['id']}, step {step.get('step', step_idx + 1)}...")
 
                 writer_input = {
                     "scene_context": {
                         "scene_name": scene_data["scene_name"],
                         "narrative_structure": scene_data.get("narrative_structure"),
                     },
-                    "action": {
-                        "performer": action["performer"],
-                        "verb": action["verb"],
-                        "noun1": action["noun1"],
-                        "noun2": action["noun2"],
-                    },
+                    "action": {key: val for key, val in action.items() if key not in ["dramaturg_notes", "beat"]},
                     "beat_step": step,
                     "dramaturg_notes": action.get("dramaturg_notes")
                 }
 
-                dialogue = api_client.call_openrouter_for_text(
-                    model_name,
-                    self.prompt,
-                    json.dumps(writer_input)
+                dialogue = api_client.call_openrouter_for_text( 
+                    model_name=model_name,
+                    system_prompt=self.prompt,
+                    user_prompt=json.dumps(writer_input),
+                    base_url=base_url,
+                    api_type=api_type
                 )
 
                 if not dialogue:
-                    print(f"Writer LLM call failed for action {action['id']}, step {step['step']}. Skipping.")
+                    print(f"Writer LLM call failed for action {action['id']}, step {step.get('step', step_idx + 1)}. Skipping.")
                     continue
                 
-                step["dialogue"] = dialogue
-                print(f"Successfully wrote dialogue for action {action['id']}, step {step['step']}.")
+                step["dialogue"] = dialogue.strip() 
+                if "approved" not in step: 
+                    step["approved"] = False
+                print(f"Successfully wrote dialogue for action {action['id']}, step {step.get('step', step_idx + 1)}.")
+            
+            actions_processed_count +=1
 
         return scene_data
 
@@ -311,62 +371,68 @@ class GenerateI7XStage(Stage):
         super().__init__()
 
     def _format_for_inform7(self, text: str) -> str:
-        """Formats a raw string for Inform 7, converting newlines and special characters."""
         if not isinstance(text, str):
             return ""
         text = text.replace('"', '[quotation mark]')
-        text = text.replace("'", "[apostrophe]")
-        text = text.replace('\n\n', '[paragraph break]')
-        text = text.replace('\n', '[line break]')
+        text = text.replace("'", "[apostrophe]") 
+        text = text.replace('\r\n', '[line break]').replace('\n', '[line break]')
         return text
 
     def execute(self, scene_data: dict, **kwargs) -> dict:
-        """
-        Executes the I7X generation logic.
-        """
         scene_name = scene_data["scene_name"]
         output_dir = "pipeline/output/extensions"
         os.makedirs(output_dir, exist_ok=True)
         
-        responses_path = os.path.join(output_dir, f"{scene_name} Responses.i7x")
+        i7_scene_name_prefix = scene_name.replace('-', ' ').title().replace(' ', '')
+
+        responses_path = os.path.join(output_dir, f"{i7_scene_name_prefix} Responses.i7x")
         print(f"Generating responses file: {responses_path}")
         
         with open(responses_path, 'w', encoding='utf-8') as f:
-            f.write(f'Version 1 of {scene_name} Responses by Unwinnable Engine begins here.\n\n')
-            f.write(f'Table of {scene_name} Responses\n')
-            f.write('performer\tverb\tfirst-noun\tsecond-noun\tpoints\thandler_name\tresponse\n')
+            f.write(f'Version 1 of {i7_scene_name_prefix} Responses by Unwinnable Engine begins here.\n\n')
+            f.write(f'Table of {i7_scene_name_prefix} Scene Responses\n') 
+            f.write('performer (text)\tverb (text)\tfirst-noun (text)\tsecond-noun (text)\tpoints (number)\thandler_name (text)\tresponse (text)\n')
 
             for action in scene_data.get("actions", []):
-                if not action.get("approved"):
-                    continue
+                if not action.get("dramaturg_notes", {}).get("approved", False) and not action.get("approved", False): 
+                    continue 
                 
+                dramaturg_approved = action.get("dramaturg_notes", {}).get("approved", False) or action.get("approved", False)
+
                 for step in action.get("beat", []):
-                    if not step.get("approved"):
+                    if not step.get("approved", False) and not dramaturg_approved : 
                         continue
                     
                     handler_name = action.get("dramaturg_notes", {}).get("special_handler_name", "")
-                    f.write(f'"{action["performer"]}"\t"{action["verb"]}"\t"{action.get("noun1") or ""}"\t"{action.get("noun2") or ""}"\t{step.get("points", 0)}\t"{handler_name}"\t"{self._format_for_inform7(step["dialogue"])}"\n')
+                    performer = action.get("performer", "")
+                    verb = action.get("verb", "")
+                    noun1 = action.get("noun1", "")
+                    noun2 = action.get("noun2", "")
+                    points = step.get("points", 0)
+                    dialogue = step.get("dialogue", "")
 
-            f.write(f'\n{scene_name} Responses ends here.\n')
+                    f.write(f'"{performer}"\t"{verb}"\t"{noun1}"\t"{noun2}"\t{points}\t"{handler_name}"\t"{self._format_for_inform7(dialogue)}"\n')
+
+            f.write(f'\n{i7_scene_name_prefix} Responses ends here.\n')
         
-        handlers_path = os.path.join(output_dir, f"{scene_name} Handlers.i7x")
+        handlers_path = os.path.join(output_dir, f"{i7_scene_name_prefix} Handlers.i7x")
         print(f"Generating handlers file: {handlers_path}")
 
         with open(handlers_path, 'w', encoding='utf-8') as f:
-            f.write(f'Version 1 of {scene_name} Handlers by Unwinnable Engine begins here.\n\n')
+            f.write(f'Version 1 of {i7_scene_name_prefix} Handlers by Unwinnable Engine begins here.\n\n')
             
             for action in scene_data.get("actions", []):
                 notes = action.get("dramaturg_notes", {})
-                if action.get("approved") and notes.get("outcome") == "special-handling":
+                if notes.get("approved", False) and notes.get("outcome") == "special-handling":
                     handler_name = notes.get("special_handler_name")
                     code_lines = notes.get("generated_i7_code", [])
                     if handler_name and code_lines:
                         f.write(f'To {handler_name}:\n')
                         for line in code_lines:
-                            f.write(f'\t{line}\n')
+                            f.write(f'\t{line.strip()}\n') 
                         f.write('\n')
 
-            f.write(f'{scene_name} Handlers ends here.\n')
+            f.write(f'{i7_scene_name_prefix} Handlers ends here.\n')
             
         print("I7X file generation complete.")
         return scene_data

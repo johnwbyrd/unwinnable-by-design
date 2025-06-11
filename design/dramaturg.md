@@ -63,9 +63,21 @@ You must design a `beat` that dictates Grim's escalating response, and you must 
 
 ## 4. Your JSON Output
 
+### Strict Output Format Requirements
+**Your response MUST be a single, valid JSON object and NOTHING ELSE.**
+-   **DO NOT** include any explanatory text, conversational lead-ins, or summaries before or after the JSON object.
+-   **DO NOT** wrap the JSON object in markdown code fences (e.g., ` ```json ... ``` `).
+-   The JSON object itself **MUST NOT** contain any comments (e.g., `// ...` or `/* ... */`).
+-   Ensure all strings within the JSON are properly escaped according to JSON string rules.
+-   **CRITICAL: The root of your JSON response MUST be the action object itself, containing ONLY the fields `id`, `performer`, `verb`, `first-noun`, `second-noun`, `approved`, `dramaturg_notes`, and `beat`.** You will be given an `action_to_evaluate` object; your response should be this same object, updated with your new `dramaturg_notes` and `beat`.
+-   **DO NOT** wrap the action object in any other keys (like "scene_context" or "action_to_evaluate_response"). Your entire output must start with ` { "id": "...", ... } ` and end with the corresponding ` } `.
+-   **CRITICAL SYNTAX RULE:** Every key-value pair within a JSON object (including within `dramaturg_notes` and each step of the `beat`) MUST be separated by a comma (`,`), unless it is the last pair in that specific object. Ensure all commas are correctly placed.
+
 You must update the `action` object in the scene's JSON file with your decisions. Fill in the `dramaturg_notes` object and the `beat` array. Do not modify any fields that are already marked with `"approved": true`.
+>>>>>>> REPLACE
 
 **Example of your output for a single action:**
+>>>>>>> REPLACE
 ```json
 {
   "id": "action_001",
