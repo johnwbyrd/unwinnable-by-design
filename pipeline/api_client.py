@@ -4,6 +4,7 @@ import os
 import re
 import requests
 import json
+import os
 
 # It's best practice to load your API key from an environment variable
 # You can set this in your shell: export OPENROUTER_API_KEY='your_key_here'
@@ -115,7 +116,9 @@ def call_openrouter(model_name: str, system_prompt: str, user_prompt: str) -> di
         except json.JSONDecodeError:
             # If parsing fails, log the issue and return None
             print("Failed to decode JSON from the API response.")
-            with open("unwinnable-generator/debug_log.txt", "a", encoding="utf-8") as log_file:
+            debug_log_path = "pipeline/output/debug_log.txt"
+            os.makedirs(os.path.dirname(debug_log_path), exist_ok=True)
+            with open(debug_log_path, "a", encoding="utf-8") as log_file:
                 log_file.write("--- JSON DECODE ERROR ---\n")
                 log_file.write(f"MODEL: {model_name}\n")
                 log_file.write("USER PROMPT (JSON DUMP):\n")

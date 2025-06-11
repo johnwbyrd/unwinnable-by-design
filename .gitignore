@@ -4,3 +4,6 @@ Index/
 *.plist
 *.iFiction
 *.blurb
+*.pyc
+*.pyo
+

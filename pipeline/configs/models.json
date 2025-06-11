@@ -1,0 +1,14 @@
+{
+  "staff": {
+    "cheap": {
+      "parser": "anthropic/claude-3-haiku",
+      "dramaturg": "anthropic/claude-3-haiku",
+      "writer": "anthropic/claude-3-haiku"
+    },
+    "expensive": {
+      "parser": "anthropic/claude-3-sonnet",
+      "dramaturg": "anthropic/claude-3-opus",
+      "writer": "anthropic/claude-3-opus"
+    }
+  }
+}
